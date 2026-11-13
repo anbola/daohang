@@ -5943,7 +5943,7 @@ html[data-pal] .chip{width:max-content!important;max-width:100%!important}
    --sdA:color-mix(in srgb,var(--red) 7%,var(--surface));
    --sdB:color-mix(in srgb,var(--brand) 6%,var(--surface));
    position:relative;display:flex;align-items:center;gap:0;
-   width:100%;max-width:560px;height:40px;margin:0;padding:3px 3px 3px 5px;
+   width:100%;max-width:620px;height:40px;margin:0;padding:3px 3px 3px 5px;
    border:1px solid color-mix(in srgb,var(--red) 24%,var(--line));
    border-radius:10px;
    background:linear-gradient(110deg,var(--sdA) 0%,var(--sdB) 46%,var(--surface) 100%);
@@ -6230,6 +6230,117 @@ html[data-pal]:not([data-pal="night"]) .top .wt .wt-sep{background:var(--v4-line
 html[data-pal]:not([data-pal="night"]) .top .wt{border-color:var(--v4-line)!important;
   background:var(--v4-surface2)!important}
 html[data-pal]:not([data-pal="night"]) .top .vdiv{background:var(--v4-line)!important}
+
+/* ================= v15：首屏收字、页脚缩小、常用空态 =================
+   桌面才收标题；断点内的字号是逐档调好的，别用全局 !important 盖掉。 */
+@media(min-width:1081px){
+  .hero h1,html[data-pal] .hero h1{font-size:clamp(20px,1.85vw,25px)!important;letter-spacing:-.02em!important}
+  .hero h1 em,html[data-pal] .hero h1 em{font-size:.84em!important;letter-spacing:0}
+  .hero h1 em::after,html[data-pal] .hero h1 em::after{height:.26em!important;bottom:.02em!important}
+}
+.foot-note,.sign{font-size:10.5px!important}
+.foot-note b{color:var(--brand-ink);font-weight:750;letter-spacing:.02em}
+.pin-empty{
+  margin:2px 0 0;padding:14px 16px;border:1px dashed var(--line);
+  border-radius:10px;background:var(--surface);color:var(--ink-2);font-size:12px;
+}
+.item .dl span{font-size:11px}
+
+/* ==================== v16 · 卡片直链行压紧 ====================
+   原来来源标签 / 提取码各占一行、直链按钮又大又占地方，把卡片撑得很高、
+   名称和说明被挤到截断。改成「名称 / 说明 / 来源」三行常驻流内排布。
+   注意：配色层有 html[data-pal] .item{padding:var(--v8-pad)!important}，
+   特异性高于 .item.has-dl；早期版本用「绝对定位 + 加 padding-bottom」的做法
+   会被它覆盖，导致来源行压在说明文字上。这里改用 html .item.has-dl 打平特异性，
+   并让 .dmeta 回到文档流，从根上杜绝叠压。 */
+html .item.has-dl{
+  min-height:0!important;align-items:flex-start!important;
+  padding-bottom:7px!important}
+html .item.has-dl .bd{padding-right:0!important}
+/* v8 全局给 .nm 上了 nowrap+overflow:hidden，长名称 + 多徽章会被切掉半字。
+   直链卡只保留「版本 / 首选」，免费度改由底部 .dmeta em.df 显示。 */
+html .item.has-dl .nm{gap:4px!important}
+html .item.has-dl .nm .bg{display:none!important}
+html .item.has-dl .nm .ver,html .item.has-dl .nm .must{
+  font-size:9.6px!important;padding:1px 4px!important}
+html .item.has-dl .dmeta em.df{
+  flex:0 0 auto;font-size:9.8px;font-weight:700;color:var(--ink-2);
+  background:var(--surface-3);border:1px solid var(--line-2);
+  border-radius:5px;padding:0 5px}
+html .item.has-dl .ds{
+  -webkit-line-clamp:1!important;white-space:nowrap!important;
+  overflow:hidden!important;text-overflow:ellipsis!important;
+  padding-right:62px!important;margin-top:2px!important}
+html .item.has-dl .dmeta{
+  position:static!important;left:auto!important;bottom:auto!important;
+  display:flex;align-items:center;gap:0 5px;flex-wrap:nowrap;white-space:nowrap;
+  margin:3px 0 0!important;max-width:calc(100% - 62px);overflow:hidden;
+  font-size:10px;line-height:1.3}
+html .item.has-dl .dmeta b{font-size:9.8px;padding:1px 5px;flex:0 0 auto}
+html .item.has-dl .dmeta em{font-size:10px;flex:0 0 auto}
+html .item.has-dl .dmeta em.pw{font-size:10px;padding:1px 5px}
+html .item.has-dl .dmeta em.dsrc{flex:0 1 auto;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;font-weight:600}
+html .item.has-dl .dl{
+  position:absolute;right:8px;bottom:6px;margin:0;opacity:1;transform:none;
+  padding:3px 8px;gap:3px;border-radius:7px;box-shadow:none}
+html .item.has-dl .dl:hover{transform:translateY(-1px);box-shadow:0 3px 8px -3px rgba(0,0,0,.4)}
+html .item.has-dl .dl .dl-ic{width:11px;height:11px}
+html .item.has-dl .dl span{font-size:10.5px;letter-spacing:0}
+@media(max-width:640px){
+  html .item.has-dl .dmeta{max-width:calc(100% - 60px)}
+  html .item.has-dl .dmeta em.dsrc{display:none}
+  html .item.has-dl .dl{position:absolute!important;right:8px;bottom:6px}
+  html .item.has-dl{min-height:0!important}
+}
+/* v17 · 去掉档名分层后 chips 一律横排一行流，压紧内边距让 11 个标签在桌面排得下。
+   配色层 html[data-pal] .chip{padding:0 14px!important} 特异性 (0,2,1)，
+   这里用 (0,3,1) 覆盖；窄屏仍允许 flex-wrap 换行。 */
+html[data-pal] .chips .chip{padding:0 10px!important;gap:5px}
+html[data-pal] .chips{gap:5px!important}
+/* v16 · 左侧级联的档名小标题（深底亮字，别用浅卡片）—— v17 已不再输出，保留样式防旧存档 */
+:is(#nav,#nav2) .nav2-sec{
+  padding:8px 10px 3px;margin-top:4px;font-size:10px;font-weight:800;letter-spacing:.09em;
+  color:var(--rail-ink-2);border-top:1px solid rgba(255,255,255,.09)}
+:is(#nav,#nav2) .nav2-sec:first-of-type{border-top:0;margin-top:0}
+/* v16 · 问卷 / 机房结论条 */
+.vote-verdict{display:flex;align-items:center;gap:7px 10px;flex-wrap:wrap;
+  margin:0 0 12px;padding:9px 12px;border-radius:10px;
+  background:var(--surface-2);border:1px solid var(--line);
+  font-size:11.5px;line-height:1.5;color:var(--ink-2)}
+.vote-verdict b{flex:0 0 auto;font-size:11px;color:var(--brand-ink);
+  background:var(--brand-soft);padding:3px 8px;border-radius:6px}
+.vote-verdict span{white-space:normal}
+.vote-verdict i{font-style:normal;font-weight:800;color:var(--ink);margin-right:4px}
+.vote-verdict em{flex-basis:100%;font-style:normal;font-weight:700;color:var(--brand-ink)}
+[data-theme="dark"] .vote-verdict{background:var(--surface-3);color:var(--ink-2)}
+/* ==================== v18 · 纯净 / 绿色 / 特别版一眼可辨 ====================
+   纯呈现层，不改数据。用 ::before 画左侧竖条，避开 :hover 的 box-shadow 覆盖；
+   .item 本来就是 position:relative，伪元素不占文档流，不影响 v16.1 直链卡几何。 */
+/* 样式表早段有 .item::before,.item::after{display:none!important}（约 3124 行），
+   不显式 display:block!important 的话竖条会被整条压掉 —— v18 首版就踩了。 */
+html .item.pure::before{
+  display:block!important;content:'';position:absolute;left:0;top:9px;bottom:9px;width:3px;
+  border-radius:0 3px 3px 0;background:var(--ok);opacity:.85;pointer-events:none}
+html .item.pure{background:color-mix(in srgb,var(--ok-bg) 30%,var(--surface))}
+html .item.pure .nm .bg{
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ok) 55%,transparent)}
+html .item.pure.has-dl .dmeta em.df{
+  color:var(--ok);border-color:var(--ok);background:var(--ok-bg)}
+/* 分类页右侧开关，margin-left:auto 推到最右，不占 chips 宽度 */
+.pure-toggle{margin-left:auto;flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:9px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);font-size:11.5px;font-weight:700;
+  cursor:pointer;transition:var(--t);white-space:nowrap}
+.pure-toggle i{width:3px;height:12px;border-radius:2px;background:var(--ok);flex:0 0 auto}
+.pure-toggle b{font-size:10.5px;color:var(--ink-3);font-weight:800}
+.pure-toggle:hover{border-color:var(--ok);color:var(--ok)}
+.pure-toggle.on{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.pure-toggle.on b{color:var(--ok)}
+@media(max-width:640px){
+  .cat-head{flex-wrap:wrap}
+  .pure-toggle{margin-left:0}
+}
 </style>
 </head>
 <body>
@@ -6247,7 +6358,7 @@ html[data-pal]:not([data-pal="night"]) .top .vdiv{background:var(--v4-line)!impo
           <path d="M3 19.4l4.7-6.1 3.6 4.4 2.8-3.6 6.9 5.3z"/>
         </svg>
       </span>
-      <span>冬阳汇</span><small title="构建于 11-07">V1.7.0</small>
+      <span>冬阳汇</span><small title="构建于 11-13">V1.12.0</small>
     </a>
     <div class="top-stats" id="topStats" aria-label="站点统计"></div>
     <span class="top-sp"></span>
@@ -6340,7 +6451,6 @@ const SEED=[
 {n:'国家教育资源公共服务平台',u:'https://www.eduyun.cn/',c:'gov',t:'core',f:'free',d:'央馆主办，教案、课件、试卷、微课的老牌资源库',w:'和智慧教育平台互补，两边资源不完全重合，备课两边都翻一下'},
 {n:'OER Commons 开放教育资源',u:'https://oercommons.org/',c:'gov',t:'public',f:'free',d:'全球开放教材与课程资源检索',w:'找原版通识、理工科教科书；按许可筛选后再用'},
 /* ---------- 备课教材 ---------- */
-{n:'莲山课件',u:'https://www.5ykj.com/',c:'prep',t:'plan',f:'part',d:'老牌课件站，资源沉淀多'},
 {n:'第一课件网',u:'http://www.1kejian.com/',c:'prep',t:'plan',f:'part',d:'免费课件下载，无需注册'},
 {n:'绿色圃中小学教育网',u:'https://www.lspjy.com/',c:'prep',t:'plan',f:'part',d:'教案、反思、论文范文'},
 {n:'教案网',u:'http://www.jb1000.com/',c:'prep',t:'plan',f:'part',d:'各学科教案范文库'},
@@ -6465,7 +6575,7 @@ const SEED=[
 {n:'Video Subtitle Extractor',u:'https://github.com/YaoFANGUK/video-subtitle-extractor',c:'media',t:'clean',f:'open',d:'只把字幕提取成文本，不破坏画面',w:'想把别人的课转成文字稿时用它'},
 {n:'Remover.video',u:'https://www.remover.video/remove-subtitle-from-video',c:'media',t:'clean',f:'quota',d:'网页版框选去字幕，AI 修补背景',w:'免费有额度。学生视频别上传，先看清隐私条款'},
 {n:'水印云',u:'https://www.shuiyinyun.com/',c:'media',t:'clean',f:'quota',d:'去水印+去字幕，支持批量'},
-{n:'剪映专业版',u:'https://www.capcut.cn/',c:'media',t:'edit',f:'free',d:'国内最顺手，AI 字幕/抠像/朗读',w:'导出无水印；内置素材仅限剪映内使用'},
+{n:'剪映专业版',u:'https://www.capcut.cn/',c:'media',t:'edit',f:'free',d:'官方最新版 · 中文免费',w:'官网只发最新版。5.9 / 6.0.1 是官方历史版本号，不是「特别版」；网上叫「全功能解锁绿色版」的才是第三方改版，本轮实测一条 123 网盘直链已 404、资源页带违规提示，来路不明且随时失效，装前查毒。有可信蓝奏/123 直链可自己填到后台「直链」，主卡仍点官网。'},
 {n:'必剪',u:'https://bcut.bilibili.cn/',c:'media',t:'edit',f:'free',d:'B 站官方，完全免费无水印',w:'老电脑比剪映流畅，功能够日常微课'},
 {n:'Shotcut',u:'https://shotcut.org/',c:'media',t:'edit',f:'open',d:'开源剪辑，老机器能跑',w:'低配首选。界面朴素但从不崩，支持代理剪辑'},
 {n:'Kdenlive',u:'https://kdenlive.org/',c:'media',t:'edit',f:'open',d:'开源，功能接近专业软件'},
@@ -6573,7 +6683,8 @@ const SEED=[
 {n:'金山文档',u:'https://www.kdocs.cn/',c:'office',t:'doc',f:'free',d:'WPS 在线版，兼容 Office 最好'},
 {n:'飞书',u:'https://www.feishu.cn/',c:'office',t:'doc',f:'free',d:'文档+妙记+多维表格一体'},
 {n:'石墨文档',u:'https://shimo.im/',c:'office',t:'doc',f:'quota',d:'轻量协作，界面克制'},
-{n:'WPS',u:'https://www.wps.cn/',c:'office',t:'doc',f:'free',d:'本地办公+云文档，国内兼容性好'},
+{n:'WPS',u:'https://www.wps.cn/',c:'office',t:'doc',f:'free',d:'本地办公+云文档，国内兼容性好',w:'官方卡留着更新用；右下角直链是雨糖科技去广告专业版（作者站点直下，免登录不限速）。属第三方改版、非官方分发，装前查毒，学校批量用有合规风险。',dl:'https://raincandy.tech/wpsoffice_2023_x64/',dlk:'rel',dls:'雨糖科技 · 去广告'},
+{n:'PDF-XChange PDF 编辑器',u:'https://www.pdf-xchange.com/product/pdf-xchange-editor',c:'office',t:'pdf',f:'part',d:'批注 / 编辑 / OCR，老机器也快',w:'官方卡留着看版本；右下角直链是蓝奏云直装版 PDFXE.exe，免登录不限速，本轮实测有效。属第三方改版、非官方分发，装前查毒，学校批量用有合规风险。',v:'off',dl:'https://shine.lanzouu.com/iNLR33e4vzjc',dlk:'pan',dls:'免登录不限速 · 直装版'},
 {n:'iLovePDF',u:'https://www.ilovepdf.com/zh-cn/merge_pdf',c:'office',t:'pdf',f:'quota',d:'合并/拆分/转换/压缩，一站式',w:'免费档有广告、单文件 15MB、每小时约 1-2 次任务；要不限次不上传，用上面 BentoPDF 或 PDF24'},
 {n:'Stirling PDF',u:'https://stirling.com/app/reader?lng=zh-CN',c:'office',t:'pdf',f:'open',d:'官方在线版，60+ 工具',w:'链接已带中文参数 lng=zh-CN；在线版会把文件传到官方服务器，涉密材料请用本地部署版'},
 {n:'白描',u:'https://web.baimiaoapp.com/',c:'office',t:'ocr',f:'quota',d:'图片/PDF 转文字，准确率高',w:'试卷转 Word 排版保留得不错'},
@@ -6610,7 +6721,7 @@ const SEED=[
 {n:'PDF24 中文首页',u:'https://www.pdf24.org/zh/',c:'office',t:'pdf',f:'free',d:'100% 免费的中文 PDF 全套',w:'不限次数、不加水印，中文界面；在线版要上传文件，保密材料装 PDF24 桌面版离线处理'},
 {n:'PDFsam Basic',u:'https://pdfsam.org/',c:'office',t:'pdf',f:'open',d:'本地拆分合并 PDF，不上传',w:'开源桌面版免费拆/合/转/旋转，文件不出本机；高级功能在收费版'},
 {n:'Z.Tools 在线工具',u:'https://try8.cn/',c:'office',t:'util',f:'free',d:'中文免登录工具箱',w:'文本/图片/转换/开发小工具聚合，界面干净；在线处理注意别传涉密材料'},
-{n:'蛙蛙工具',u:'https://www.iamwawa.cn/',c:'office',t:'util',f:'free',d:'中文免登录文本与图片工具',w:'打开就是工具列表，免注册逐项可用；界面带广告，别传敏感内容'},
+{n:'蛙蛙工具',u:'https://www.iamwawa.cn/',c:'office',t:'util',f:'part',d:'中文免登录文本与图片工具',w:'打开就是工具列表，免注册逐项可用；界面带广告，别传敏感内容。要无广告用 BentoPDF / PDF24（PDF）、Squoosh（压图）、Excalidraw（白板）'},
 {n:'独特工具箱',u:'https://www.dute.org/',c:'office',t:'util',f:'free',d:'中文免登录小工具合集',w:'文本处理、编码转换、图片处理；纯网页工具，文件处理方式未逐项核实'},
 {n:'TableConvert',u:'https://tableconvert.com/',c:'office',t:'util',f:'free',d:'表格 / Excel / JSON 互转',w:'打开就是可粘贴数据的转换界面，免登录；支持中英界面'},
 {n:'ConvertCSV',u:'https://www.convertcsv.com/',c:'office',t:'util',f:'free',d:'CSV 清洗与转 Excel / JSON',w:'免登录，打开就能贴数据做清洗、合并、转置'},
@@ -6627,6 +6738,8 @@ const SEED=[
 {n:'Mermaid Live 代码画图',s:'Mermaid Live',u:'https://mermaid.live/',c:'office',t:'map',f:'open',d:'代码画流程图',w:'左边写语法右边出图，导出无水印；图内标签可写中文，界面英文'},
 {n:'PairDrop 浏览器传文件',s:'PairDrop',u:'https://pairdrop.net/',c:'office',t:'send',f:'open',d:'浏览器 P2P 传文件',w:'两台设备同网打开互见即拖传，Set Language 可切简体中文；跨网可能慢，可自托管'},
 /* ---------- 课堂班务 ---------- */
+{n:'ClassTools 课堂游戏',u:'https://www.classtools.net/',c:'room',t:'interact',f:'part',d:'填词 / 连连看 / 吃豆人，60+ 课堂游戏模板',w:'免登录就能用基础模板；英文界面，免费档有广告、带锁的模板要付费，别指望全免费'},
+{n:'课堂工具箱',u:'https://classtool.cn/tools/',c:'room',t:'pick',f:'free',d:'随机点名 / 分组 / 转盘 / 计时 / 座位表，打开就用',w:'免注册、中文、大屏适配，投屏直接上课；官网自述名单只存本机浏览器、断网也能用，重要名单自己留一份。官网写的是「限时免费」，别当成永久承诺'},
 {n:'希沃白板',u:'https://easinote.seewo.com/',c:'room',t:'interact',f:'free',d:'课件+互动+投屏，学科工具齐全',w:'教室有一体机就装它，手机可当遥控器'},
 {n:'课堂酷',u:'https://kuketang.cn/',c:'room',t:'interact',f:'free',d:'弹幕、答题、随机抽人'},
 {n:'雨课堂',u:'https://www.yuketang.cn/',c:'room',t:'interact',f:'free',d:'在 PPT 里直接出题，学生手机答'},
@@ -6649,6 +6762,7 @@ const SEED=[
 {n:'青少年普法网（法治）',u:'https://qspfw.moe.gov.cn/index.html',c:'bzr',t:'safe',f:'free',d:'法治课程与宪法晨读活动'},
 {n:'家庭教育公共服务平台',u:'http://j-gov.cn/',c:'bzr',t:'coedu',f:'free',d:'家长学校课程与家庭教育案例',w:'开家长会找素材，比网上搜的靠谱'},
 /* ---------- 学科科普 ---------- */
+{n:'Polypad 虚拟教具',u:'https://polypad.amplify.com/',c:'subject',t:'math',f:'free',d:'分数条 / 天平 / 七巧板 / 数轴，拖着讲数学',w:'打开就能拖放，注册只为保存作品；原 Mathigon 旧址已迁到 Amplify，别再收藏 mathigon.org/polypad'},
 {n:'古诗文网',u:'https://www.gushiwen.cn/',c:'subject',t:'chinese',f:'free',d:'原文、译文、赏析、朗读音频齐全'},
 {n:'汉典',u:'https://zdic.net/',c:'subject',t:'chinese',f:'free',d:'字词释义、笔顺、典故，权威'},
 {n:'GeoGebra',u:'https://www.geogebra.org/',c:'subject',t:'math',f:'part',d:'动态几何与函数图像，可交互',w:'讲函数、圆锥曲线必备，能嵌进课件；<b>仅非商业用途免费</b>，下载 .ggb 源文件需登录，商用需另谈授权'},
@@ -6713,8 +6827,9 @@ const SEED=[
 {n:'Ultimaker Cura',u:'https://ultimaker.com/software/ultimaker-cura',c:'maker',t:'slice',f:'free',d:'最老牌的免费切片软件，机型库最全，教学资料也最多',w:'不认识自己打印机型号时先用它，内置几千种机型配置；B 站教程一搜一大把，适合让学生自己摸索'},
 {n:'PrusaSlicer',u:'https://www.prusa3d.com/p/prusaslicer/',c:'maker',t:'slice',f:'open',d:'Prusa 官方开源切片，支撑与层预览做得最细',w:'调支撑、看逐层路径它最直观，讲「为什么要加支撑」时投屏演示特别好用'},
 {n:'Creality Print · 创想三维',u:'https://www.creality.com/download',c:'maker',t:'slice',f:'free',d:'创想三维（Ender / K1 / K2 系列）官方切片软件',w:'学校买的多是创想机器，用它最省心：机型、耗材预设都是现成的，不用自己填参数'},
+{n:'立创开源硬件平台',u:'https://oshwhub.com/',c:'maker',t:'tut',f:'free',d:'开源电路 / PCB 工程库，电赛国奖作品合集',w:'中文，打开就能看工程与原理图，免登录；「电赛国奖作品合集」「AI 创意硬件合集」适合创客课找题目。站内「开源集市」卖开发板，看工程不花钱；要编辑 EDA 或下载源文件才需登录。库里的「立创 EDA」是画图工具，这条是找项目参考'},
 {n:'DF 创客社区',u:'https://mc.dfrobot.com.cn/',c:'maker',t:'tut',f:'free',d:'国内最活跃的创客论坛，Arduino、micro:bit、3D 打印、激光切割都有版块',w:'带社团最该先逛这里：搜「小学」「社团」能翻出别人上过的完整课例，连耗材清单都有。注册免费，下载附件要积分'},
-{n:'电子发烧友',u:'https://www.elecfans.com/',c:'maker',t:'tut',f:'free',d:'电子硬件老牌门户，电路、单片机、开源项目与资料库',w:'找电路图和芯片手册快；广告多，让学生只点「资料下载」和「论坛」两个入口'},
+{n:'电子发烧友',u:'https://www.elecfans.com/',c:'maker',t:'tut',f:'part',d:'电子硬件老牌门户，电路、单片机、开源项目与资料库',w:'找电路图和芯片手册快；广告多，让学生只点「资料下载」和「论坛」两个入口。要无广告用「立创开源硬件平台」或同组 DF 创客社区'},
 {n:'柴火创客空间',u:'https://www.chaihuo.org/',c:'maker',t:'tut',f:'part',d:'深圳老牌创客空间，公开课、工作坊与项目案例',w:'看他们的项目案例找灵感，很多是「一块板子 + 一个生活问题」的思路，适合改造成本校课题'},
 {n:'蘑菇云创客空间',u:'https://www.mushroomcloud.cn/',c:'maker',t:'tut',f:'part',d:'上海蘑菇云，创客教育课程与师资培训做得早',w:'他们的课程框架（造物、编程、结构三线）可以直接借来排一学期的社团课表'},
 {n:'i3DOne 创客课程',u:'https://www.i3done.com/course',c:'maker',t:'tut',f:'free',d:'3D One 官方课程库，几千节课件与视频，按学段年级分好',w:'开 3D 课不用自己从零做课件，这里挑一个跟着上；「国赛获奖作品」那栏能当范例给学生看'},
@@ -6743,7 +6858,7 @@ const SEED=[
 {n:'Reboot Restore Rx',u:'https://www.rebootrestore.com/',c:'soft',t:'deploy',f:'free',d:'免费还原：学生怎么折腾，重启就回到装机那天的状态',w:'先把系统更新打完、软件装齐，再开保护。开机按 Home 键可以临时退出保护维护'},
 {n:'Windows 统一写入筛选器 UWF',u:'https://learn.microsoft.com/zh-cn/windows/configuration/unified-write-filter',c:'soft',t:'deploy',f:'free',d:'Win10/11 自带写保护，零成本整机还原',w:'系统自带不用装也不花钱。组策略里开启后重启即还原，比第三方还原卡省事，还不会和杀毒打架'},
 {n:'冰点还原 Deep Freeze',u:'https://www.faronics.com/zh-hans/products/deep-freeze',c:'soft',t:'deploy',f:'part',d:'商业还原的标准答案，多分区保护、可留一个不还原的数据盘',w:'按台收费，走学校采购。考试机房（要留成绩文件）比免费方案合适'},
-{n:'极域课堂管理',u:'https://www.mythware.com/',c:'soft',t:'ctrl',f:'part',d:'屏幕广播、锁屏肃静、文件分发、远程开关机，国内机房装得最多',w:'按点数授权。买之前先要试用版跑一周，重点看学生机有没有掉线、广播花屏'},
+{n:'极域课堂管理',u:'https://www.mythware.com/',c:'soft',t:'ctrl',f:'part',d:'屏幕广播 · 锁屏 · 文件分发',w:'按点数授权，官网可申请试用版先跑一周，重点看学生机掉线与广播花屏。想完全免费免授权，用下面 Veyon（开源）或红蜘蛛。网上流传的「极域破解版」实测多为学生用来摆脱教师控制的小工具，不是教师端安装包，别装错。你手上有可信蓝奏/123 直装包，在后台「站点编辑 → 直链」填进去，右下角立刻出现下载按钮。'},
 {n:'红蜘蛛多媒体网络教室',u:'http://www.3000soft.net/',c:'soft',t:'ctrl',f:'part',d:'6 台以内免费不限时，广播/监控/远程/网络考试全都有',w:'官网写明 6 用户免费版无功能无时间限制。整间机房超 6 台要买正式版；教研组内网演示直接用免费版'},
 {n:'Veyon',u:'https://veyon.io/en/',c:'soft',t:'ctrl',f:'open',d:'开源 GPL 课堂管理，Windows 与 Linux 通吃：广播、锁屏、远程、传文件',w:'信创机房的现实解：麒麟/UOS 上能跑。教师机与学生机版本必须一致，先在一台机器上试通再推全班'},
 {n:'PDQ Deploy',u:'https://www.pdq.com/pdq-deploy/',c:'soft',t:'push',f:'part',d:'教师机推送 MSI/EXE 到全班，静默安装，免费版不限客户端数',w:'免费版不给现成软件包，得自己填静默参数。配合 PDQ Inventory 能看谁装成功、谁失败'},
@@ -6757,8 +6872,8 @@ const SEED=[
 {n:'Jitsi Meet',u:'https://meet.jit.si/',c:'soft',t:'cast',f:'open',d:'开源视频会议，浏览器就能开：手机扫码进会，教师机看共享屏幕',w:'零安装方案，国产系统用自带浏览器就能看。可自建服务器，画面不出校园网',g:'1|浏览器免装 · 跨系统通吃'},
 {n:'幕享 LetsView',u:'https://letsview.cn/screen-mirroring',c:'soft',t:'cast',f:'free',d:'免费无线投屏，手机与电脑互投，支持 AirPlay 与 Miracast',w:'手机和电脑要在同一网段。国产系统版功能比 Windows 版少，先在自己机器上试通再进教室',g:'4|客户端方案 · 有系统限制'},
 {n:'AirServer',u:'https://www.airserver.com/',c:'soft',t:'cast',f:'part',d:'在 Windows 上接收 iPhone 隔空播放和安卓 Miracast',w:'收费但稳定，苹果设备多的学校值这个钱。注意它只能装在 Windows 教师机上',g:'4|客户端方案 · 有系统限制'},
-{n:'Tally',u:'https://tally.so/',c:'soft',t:'vote',f:'free',d:'国外免费表单，填答零登录、零广告、无限份数，界面最干净',w:'老师用邮箱注册（不用手机号），学生端就是一张纯白表单，不弹任何东西。适合投屏时给学生看。服务器在国外，机房网络要先试一次通不通',g:'1|师生零账号 · 打开就填'},
-{n:'CryptPad 表单',u:'https://cryptpad.fr/form/',c:'soft',t:'vote',f:'open',d:'连老师都不用注册：打开就能建，链接一发学生就填，端到端加密',w:'开源、免账号、匿名就能建表单，这是唯一「师生双方都不用注册」的方案。缺点是数据存在加密链接里，别人拿到链接就能看，别放成绩等敏感信息',g:'1|师生零账号 · 打开就填'},
+{n:'Tally',u:'https://tally.so/',c:'soft',t:'vote',f:'free',d:'填答零登录，柱图饼图看结果',w:'学生点链接就填、无需任何身份；Form Insights 免费出柱图/饼图。注意保存表单、查看提交数据通常要教师注册一个免费账号。',g:'1|师生零账号 · 发链接就填'},
+{n:'CryptPad 表单',u:'https://cryptpad.fr/form/',c:'soft',t:'vote',f:'open',d:'匿名建表，链接一发就填',w:'师生都不用账号；结果实时柱状图，可导出 CSV/JSON。导出到表格后不会随新答卷自动更新，看活数据用内置 Responses 页。',g:'1|师生零账号 · 发链接就填'},
 {n:'银河麒麟',u:'https://www.kylinos.cn/',c:'soft',t:'xc',f:'part',d:'国产桌面系统主力，V10 教育行业适配最多',w:'【桌面首选】政采主力，国产 CPU 与外设驱动适配最全；装软件优先走商店，别乱加第三方源',g:'1|桌面主力 · 政采双雄'},
 {n:'统信 UOS',u:'https://www.uniontech.com/',c:'soft',t:'xc',f:'part',d:'另一大国产桌面系统，应用商店与兼容层较全',w:'【桌面首选】桌面体验最好的一条；同一间机房务必统一版本，否则批量装包会踩依赖坑',g:'1|桌面主力 · 政采双雄'},
 {n:'openKylin 开放麒麟',u:'https://www.openkylin.top/',c:'soft',t:'xc',f:'open',d:'社区版可自由下载，适合先在虚拟机里摸熟',w:'【开源练手】银河麒麟的社区上游，换系统前先在虚拟机里练手',g:'2|开源上游 · 社区版'},
@@ -6810,6 +6925,7 @@ const SEED=[
 {n:'火绒安全',u:'https://www.huorong.cn/',c:'soft',t:'safe',f:'free',d:'无弹窗无广告的杀毒软件',w:'替代 360/管家，不弹窗不拖慢电脑',must:1},
 {n:'Geek Uninstaller',u:'https://geekuninstaller.com/download',c:'soft',t:'safe',f:'free',d:'卸载软件并自动扫残留文件和注册表，卸完不留垃圾',w:'免安装小工具，1.8 MB。卸完会问要不要扫残留，点确定就干净了'},
 {n:'ImageGlass 看图',u:'https://github.com/d2phap/ImageGlass',c:'soft',t:'media',f:'open',d:'开源看图，比系统照片查看器快一档，支持格式最全',w:'Win11 自带的照片打开大图要转圈，这个秒开；装完把它设为 gif / webp 的默认打开方式'},
+{n:'AutoHotkey 自动化',u:'https://www.autohotkey.com/',c:'soft',t:'tool',f:'open',d:'开源脚本，机房批量快捷键与自动化',w:'绿色免安装、不联网也能跑，写几行 .ahk 就能批量改键 / 填表 / 开机自启；无广告、无捆绑。英文界面，要自己写脚本；下载页 autohotkey.com/download 实测可达'},
 {n:'Notepad3 文本编辑',u:'https://rizonesoft.com/downloads/notepad3/',c:'soft',t:'tool',f:'free',d:'替代记事本：语法高亮、编码转换、大文件不卡',w:'改 ini、看日志、拆 csv 都靠它。别用 Windows 记事本存 UTF-8，会加 BOM 把网站搞乱'},
 {n:'TrafficMonitor 任务栏监控',u:'https://github.com/zhongyang219/TrafficMonitor',c:'soft',t:'tool',f:'open',d:'在任务栏看网速、CPU、内存，装机后第一眼看它',w:'机房排查「是不是有人在下载」直接看它；绿色版解压即用，不进注册表'},
 {n:'Ditto',u:'https://ditto-cp.sourceforge.io/',c:'soft',t:'tool',f:'open',d:'剪贴板历史，批量复制粘贴',w:'抄多段素材时省一半时间'},
@@ -6879,20 +6995,12 @@ const SEED=[
 {n:'OCRmyPDF',u:'https://github.com/ocrmypdf/OCRmyPDF',c:'soft',t:'office',f:'open',d:'给扫描 PDF 加文字层'},
 {n:'Stirling-PDF 自托管',u:'https://github.com/Stirling-Tools/Stirling-PDF',c:'soft',t:'office',f:'open',d:'Docker 本地跑全套 PDF'},
 {n:'白描 App',u:'https://www.baimiaoapp.com/',c:'soft',t:'office',f:'free',d:'拍照取字 / 表格识别'},
-{n:'Framadate 免登录投票',u:'https://framadate.org/abc/',c:'soft',t:'vote',f:'open',d:'不用注册，建完就发链接',w:'师生双方都不用账号，结果自动汇总成统计表。法国公益站，机房网络先试一次通不通',g:'1|师生零账号 · 打开就填'},
-{n:'Liveworksheets 互动学习单',u:'https://www.liveworksheets.com/',c:'soft',t:'vote',f:'part',d:'学习单自动批改出成绩',w:'教师注册做单，学生用链接/班级码免登录做，系统自动判分并生成成绩表。国内偶有反爬，先试连通',g:'3|学习单 · 自动批改看板'},
-{n:'Wizer.me 学习单',u:'https://app.wizer.me/',c:'soft',t:'vote',f:'part',d:'互动学习单，自动出班级数据',w:'教师注册，学生用班级码免注册加入；自动批改、按题看正确率，免费档限量',g:'3|学习单 · 自动批改看板'},
-{n:'GoFormative',u:'https://app.formative.com/',c:'soft',t:'vote',f:'quota',d:'全班答题实时看板',w:'教师注册发班级码，学生免注册加入；教师端逐人实时看答题过程并导出成绩',g:'3|学习单 · 自动批改看板'},
-{n:'Socrative 课堂测验',u:'https://www.socrative.com/',c:'soft',t:'vote',f:'quota',d:'房间号进去就答，实时报告',w:'教师开房间，学生输房间号免注册答题；即时出正确率并导出 Excel/PDF 报告',g:'3|学习单 · 自动批改看板'},
-{n:'Classkick',u:'https://classkick.com/',c:'soft',t:'vote',f:'part',d:'全班作业实时同屏',w:'教师注册，学生用班级码免注册加入；能看到每个学生的实时作答并可回放',g:'3|学习单 · 自动批改看板'},
-{n:'Quizizz',u:'https://wayground.com/',c:'soft',t:'vote',f:'quota',d:'游戏化测验自动出报告',w:'教师注册，学生输加入码免注册；自动判分、按知识点出掌握度报告',g:'3|学习单 · 自动批改看板'},
-{n:'Edpuzzle 视频嵌题',u:'https://edpuzzle.com/',c:'soft',t:'vote',f:'part',d:'视频里插题，自动记分',w:'教师注册，学生用链接/班级码免注册看视频答题；自动记录观看与答题数据',g:'3|学习单 · 自动批改看板'},
-{n:'LimeSurvey',u:'https://www.limesurvey.org/',c:'soft',t:'vote',f:'open',d:'开源问卷，统计图表齐全',w:'自建后学生完全匿名填、无需账号；自带交叉表、图表、SPSS/Excel 导出，机房断网也能用',g:'4|开源自托管 · 机房断网可用'},
-{n:'OpnForm',u:'https://opnform.com/',c:'soft',t:'vote',f:'open',d:'开源表单，结果看板',w:'可自托管；公开链接匿名填写，自带提交看板与导出，适合校内自建',g:'4|开源自托管 · 机房断网可用'},
-{n:'Typebot 对话式表单',u:'https://typebot.com/',c:'soft',t:'vote',f:'open',d:'一问一答收数据',w:'开源可自托管；学生端无需账号，结果进内置分析面板',g:'4|开源自托管 · 机房断网可用'},
-{n:'Formbricks',u:'https://formbricks.com/',c:'soft',t:'vote',f:'open',d:'开源问卷，自带分析',w:'自托管后匿名填写、结果可视化，偏体验调研，适合校本部署',g:'4|开源自托管 · 机房断网可用'},
-{n:'SurveyJS',u:'https://surveyjs.io/',c:'soft',t:'vote',f:'open',d:'开源表单引擎 + 结果分析',w:'开发者向，可嵌进自建页面；匿名填写、结果可导出，需要自己部署',g:'4|开源自托管 · 机房断网可用'},
-{n:'NocoDB',u:'https://nocodb.com/',c:'soft',t:'vote',f:'open',d:'把收上来的数据变成表格',w:'开源自托管，表单/表格/看板一体；配合上面的表单工具做机房数据汇总',g:'4|开源自托管 · 机房断网可用'},
+{n:'Framadate 免登录投票',u:'https://framadate.org/abc/',c:'soft',t:'vote',f:'open',d:'免登录排期投票，结果成图',w:'师生零账号、无广告；结果在线图形化。只做约时间/选项投票，不是完整问卷；表单默认 180 天后删除。',g:'1|师生零账号 · 发链接就填'},
+{n:'GoFormative',u:'https://app.formative.com/',c:'soft',t:'vote',f:'quota',d:'实时答题看板，有频次图',w:'教师免费账号；常规要学生建账号+6 位 Join Code，Guest 免登录仅一次性且成绩不进 Tracker。免费档报告只回溯 14 天。',g:'2|学生免登录 · 教师要账号'},
+{n:'Socrative 课堂测验',u:'https://www.socrative.com/',c:'soft',t:'vote',f:'quota',d:'房间号进班，实时成绩',w:'教师免费账号；学生免账号但要输房间名或扫码。免费 5 份测验 / 1 房间 / 50 人 / 30 天报告；结果以表格和报告为主。',g:'2|学生免登录 · 教师要账号'},
+{n:'Classkick',u:'https://classkick.com/',c:'soft',t:'vote',f:'part',d:'全班作答同屏，实时看',w:'教师免费账号；学生 6 位班级码+姓名免登录。免费每月 500 页学生作业+20 作业槽，超限看不到学生作业。看板是作答画面墙，不是统计图表。',g:'2|学生免登录 · 教师要账号'},
+{n:'Quizizz',u:'https://wayground.com/',c:'soft',t:'vote',f:'quota',d:'游戏码进班，实时排行榜',w:'Quizizz 已改名 Wayground。教师免费账号；学生 6 位游戏码+昵称免登录。实时排行榜与按题报告；深度成长报告在学校版。',g:'2|学生免登录 · 教师要账号'},
+{n:'Edpuzzle 视频嵌题',u:'https://edpuzzle.com/',c:'soft',t:'vote',f:'part',d:'视频嵌题，进度即时看',w:'教师免费账号；只有 Open class 才匿名免登录，Classic 需学生账号。免费约 20 部视频；Open 模式按人追踪不可用。',g:'2|学生免登录 · 教师要账号'},
 {n:'Deskreen 浏览器副屏',u:'https://deskreen.com/',c:'soft',t:'cast',f:'open',d:'任意系统浏览器当接收屏',w:'教师机装一个程序，接收端只要浏览器打开链接：Windows / 麒麟 / 统信 / 安卓 / iPhone 全通。公开课换机器不用重装',g:'1|浏览器免装 · 跨系统通吃'},
 {n:'VDO.Ninja 网页投屏',u:'https://vdo.ninja/',c:'soft',t:'cast',f:'free',d:'手机浏览器直接推屏到大屏',w:'收发两端都用浏览器，不装客户端、不注册；房间号一串就行，跨 Windows / 国产 Linux / 安卓 / iOS。画质与延迟不如原生协议',g:'1|浏览器免装 · 跨系统通吃'},
 {n:'screego 自建投屏',u:'https://screego.net/',c:'soft',t:'cast',f:'open',d:'校内自建浏览器投屏服务',w:'开源，Go 单文件可跑在教师机；同网内学生浏览器看，不依赖外网，适合机房断网',g:'1|浏览器免装 · 跨系统通吃'},
@@ -6922,10 +7030,20 @@ const SEED=[
 {n:'Espanso 短语展开',s:'Espanso',u:'https://espanso.org/',c:'soft',t:'tool',f:'open',d:'快捷短语文本展开',w:'写配置文件定义缩写，中文短语也能用；没有图形界面'},
 {n:'VeraCrypt 磁盘加密',s:'VeraCrypt',u:'https://veracrypt.io/en/Home.html',c:'soft',t:'safe',f:'open',d:'磁盘加密容器',w:'接替停更的 TrueCrypt，Win/Linux/Mac 全平台；简体中文路径未核实'},
 {n:'Czkawka 重复文件清理',s:'Czkawka',u:'https://github.com/qarmin/czkawka',c:'soft',t:'file',f:'open',d:'重复文件与相似图清理',w:'Rust 写的开源工具，不联网；仓库页选 Releases 下载，有便携版'},
+{n:'Office Pro Plus 2024 LTSC',u:'https://www.microsoft.com/zh-cn/microsoft-365/office-2024',c:'soft',t:'office',f:'part',d:'Word / Excel / PPT 买断版，无订阅',w:'官方卡留着看正版说明；右下角直链是百度网盘分享，需登录且限速，是最后选择。属第三方分享、非官方分发，装前查毒，学校批量用有合规风险。若有蓝奏/123 的同类版本，优先换掉这条。',v:'off',dl:'https://pan.baidu.com/share/init?surl=0uiQ0cM_ZM1NAt-B8UNvew&pwd=sqe4',dlk:'bd',dlp:'sqe4',dls:'需登录 · 限速'},
+{n:'PeaZip 开源压缩',u:'https://peazip.github.io/',c:'soft',t:'file',f:'open',d:'开源解压缩，界面比 7-Zip 友好',w:'认 200+ 格式，绿色版解压即用，无广告'},
+{n:'WinMerge 文本比对',u:'https://winmerge.org/',c:'soft',t:'tool',f:'open',d:'两份教案 / 代码逐行比对',w:'开源无广告，改动高亮，可直接合并'},
+{n:'QQ Windows 版',u:'https://im.qq.com/pcqq/',c:'soft',t:'net',f:'free',d:'工作群与传文件，绕不开',w:'官网直下；安装时取消附加勾选'},
+{n:'钉钉',u:'https://www.dingtalk.com/',c:'soft',t:'net',f:'free',d:'学校通知、打卡、家校群',w:'官方版无捆绑，个人使用免费'},
+{n:'Poll Maker',u:'https://www.poll-maker.com/',c:'soft',t:'vote',f:'part',d:'免登录建投票，结果实时成图',w:'师生都不用注册：写个问题加选项，发链接就填。实时饼图/柱图、大屏演示、前后测对比，可导出结果。免费带小徽章，去徽章才付费。国内实测可开。。要无广告用同组 CryptPad / Tally / ARSnova / Framadate',g:'1|师生零账号 · 发链接就填'},
+{n:'StrawPoll',u:'https://strawpoll.com/',c:'soft',t:'vote',f:'part',d:'一行建投票，实时饼图柱图',w:'免注册创建，结果实时推送刷新，可导出 Excel/CSV。免费无限投票但带广告；默认拦 VPN/代理，机房若走代理可能投不了。。要无广告用同组 CryptPad / Tally / ARSnova / Framadate',g:'1|师生零账号 · 发链接就填'},
+{n:'ARSnova',u:'https://arsnova.eu/',c:'soft',t:'vote',f:'open',d:'开源课堂问答，词云实时上屏',w:'师生都免注册，学生用 6 位码或扫码进。实时词云、投票、排行榜、趋势图，免费 500 人，开源可自托管。国内实测可开。',g:'1|师生零账号 · 发链接就填'},
+{n:'WPS 表单',u:'https://f.wps.cn/',c:'soft',t:'vote',f:'free',d:'中文免登录填，饼图条形图',w:'教师要 WPS 账号；学生点链接就填、不用登录不用手机号，结果实时同步，选择题自动出饼图/条形图。别开「群收集」「填写需登录」，一开就要微信/QQ 身份。',g:'2|学生免登录 · 教师要账号'},
 /* ---------- 插件与脚本 ---------- */
 {n:'Tampermonkey 篡改猴',u:'https://www.crxsoso.com/webstore/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo',c:'plug',t:'mgr',f:'free',d:'最主流的脚本管理器，生态最大',w:'Chrome 需开开发者模式脚本才跑'},
 {n:'Violentmonkey 暴力猴',u:'https://www.crxsoso.com/webstore/detail/jinjaccalgkegednnccohejagnlnfdag',c:'plug',t:'mgr',f:'open',d:'开源隐私友好，兼容油猴脚本',w:'界面偏技术向，新手略费劲'},
 {n:'ScriptCat 脚本猫',u:'https://www.crxsoso.com/webstore/detail/ndcooeababalnlpkfedmmbbbgkljhpjf',c:'plug',t:'mgr',f:'open',d:'国产，支持后台脚本与定时任务',w:'国内访问快，脚本市场在 scriptcat.org'},
+{n:'uBlock Origin Lite 去广告',u:'https://microsoftedge.microsoft.com/addons/detail/ublock-origin-lite/cimighlppcgcoapaliogpjjdehbnofhn',c:'plug',t:'ad',f:'open',d:'Edge 官方商店直达，开源免费去广告，装上就清净',w:'GPLv3 开源、完全免费、不收捐赠、不收集个人数据，MV3 版适配新版 Edge / Chrome。完整版 uBlock Origin 因 Manifest V3 在 Edge 已不兼容、将被移除，别再找旧链接；ublockorigin.com 自称非官方独立指南，别从那里装。Lite 默认过滤强度略低于完整版，某站拦不掉就在弹窗把模式调到 Optimal / Complete'},
 {n:'AdGuard 广告拦截器',u:'https://www.crxsoso.com/webstore/detail/bgnkhhnnamicmpeenaelnjfhikgbkllg',c:'plug',t:'ad',f:'part',d:'中文规则全，能拦视频贴片',w:'反跟踪全套在付费版，免费够用'},
 {n:'Adblock Plus',u:'https://www.crxsoso.com/webstore/detail/cfhdojbkjhnklbpkdaibdccddilifddb',c:'plug',t:'ad',f:'free',d:'老牌拦截，零门槛上手',w:'默认放行“可接受广告”，要手动关'},
 {n:'登录个锤子',u:'https://greasyfork.org/zh-CN/scripts/428960',c:'plug',t:'ad',f:'open',d:'CSDN/知乎/B站/简书免登录去广告',w:'只做免打扰，不破解付费内容'},
@@ -7023,8 +7141,8 @@ let LS=lsKey(CUR_PID);
 /* v12：内置站点版本号。每次增删内置站点就改这里，老用户打开时自动增量合并 */
 /* v9：分组首选。组内第一条按「同类特别版/去广告/直装版优先 + 教师使用频率 +
    纯净度」挑定；同源 sites.json 的 top 字段可覆盖，以后调顺序只改数据文件。 */
-const SEED_TOP={"soft|file":["https://www.rarlab.com/download.htm","https://www.7-zip.org/","https://github.com/qarmin/czkawka"],"soft|office":["https://calibre-ebook.com/download_portable","https://raincandy.tech/wpsoffice_2023_x64/","https://www.wps.cn/","https://www.onlyoffice.com/zh/desktop","https://github.com/hiroi-sora/Umi-OCR"],"office|ocr":["https://pearocr.com/","https://tesseract.projectnaptha.com/","https://web.baimiaoapp.com/","https://ocr.wdku.net/","https://github.com/hiroi-sora/Umi-OCR"],"soft|src":["https://chunjing.app"],"soft|media":["https://getsharex.com/"],"soft|tool":["https://espanso.org/","https://www.mefcl.com/sougouime.html"],"soft|safe":["https://www.bleachbit.org/","https://veracrypt.io/en/Home.html","https://www.huorong.cn/"],"soft|os":["https://www.ventoy.net/"],"soft|batch":["https://ninite.com"],"soft|net":["https://www.todesk.com/download.html"],"soft|browse":["https://www.slimjet.com/cn/dlpage.php"],"soft|edu":["https://anbola.github.io/fenban/"],"plug|net":["https://scriptcat.org/zh-CN/script-show-page/1604"],"plug|vid":["https://www.crxsoso.com/webstore/detail/jfedfbgedapdagkghmgibemcoggfppbb"],"plug|copy":["https://www.crxsoso.com/webstore/detail/cbhljnnfpomfkmhefapcjmjignigcfpn"],"exam|online":["https://wj.qq.com/"],"prep|book":["http://www.dzkbw.com/"],"gov|core":["https://www.smartedu.cn/"],"ai|chat":["https://chat.deepseek.com/"],"ai|search":["https://metaso.cn/"],"media|edit":["https://audiomass.co/","https://www.capcut.cn/"],"media|rec":["https://obsproject.com/"],"media|dl":["https://github.com/yt-dlp/yt-dlp"],"design|cut":["https://github.com/Sanster/IOPaint","https://cleanup.pictures/","https://www.photopea.com/l/zh_cn/","https://picwish.cn/remove-unwanted-object"],"design|tmpl":["https://www.canva.cn/"],"office|pdf":["https://www.bentopdf.com/zh","https://tools.pdf24.org/zh/all-tools","https://stirling.com/app/reader?lng=zh-CN","https://tools.pdf24.org/zh/edit-pdf","https://docsmall.com/","https://www.ilovepdf.com/zh-cn/merge_pdf"],"office|send":["https://www.wenshushu.cn/","https://pairdrop.net/"],"room|interact":["https://easinote.seewo.com/"],"room|pick":["https://www.seewo.com/"],"subject|science":["https://phet.colorado.edu/zh_CN/"],"maker|model":["https://www.i3done.com/zh-cn/product/3done.html","https://www.freecad.org/downloads.php?lang=zh_CN"],"research|lit":["https://xueshu.baidu.com/"],"video|mooc":["https://www.icourse163.org/"],"office|util":["https://gchq.github.io/CyberChef/","https://uutool.cn/","https://www.lddgo.net/","https://tool.lu/","https://try8.cn/"],"design|tool":["https://bulkresizephotos.com/zh","https://squoosh.app/","https://tinypng.com/zh/compress"],"media|clean":["https://github.com/YaoFANGUK/video-subtitle-remover","https://online-video-cutter.com/cn/remove-logo","https://videowatermarkremover.app/"],"media|conv":["https://handbrake.fr/","https://shana.pe.kr/","https://www.aconvert.com/cn/"],"soft|deploy":["https://www.os-easy.com/"],"soft|cast":["https://deskreen.com/","https://vdo.ninja/","https://meet.jit.si/","https://screego.net/","https://github.com/FDH2/UxPlay"],"soft|vote":["https://cryptpad.fr/form/","https://tally.so/","https://framadate.org/abc/","https://www.limesurvey.org/"],"soft|xc":["https://www.kylinos.cn/","https://www.uniontech.com/","https://www.kaihong.com/","https://www.openeuler.openatom.cn/zh/"],"office|map":["https://www.zhixi.com/","https://mermaid.live/","https://docs.freeplane.org/"],"office|doc":["https://joplinapp.org/"],"research|data":["https://app.rawgraphs.io/"],"subject|it":["https://vscodium.com/","https://carbon.now.sh/"],"subject|math":["https://fxeditor.codecogs.com/"],"subject|chinese":["https://www.an2.net/tools/worksheet/tianzige","https://zi.tools/zi/%E5%AD%97"],"maker|hw":["https://www.kicad.org/"],"maker|code":["https://godotengine.org/"],"open|repo":["https://github.com/opendatalab/MinerU"]};
-const SEED_VER='1.0.26';
+const SEED_TOP={"soft|file":["https://www.rarlab.com/download.htm","https://www.7-zip.org/","https://github.com/qarmin/czkawka"],"soft|office":["https://raincandy.tech/wpsoffice_2023_x64/","https://calibre-ebook.com/download_portable","https://www.wps.cn/","https://www.onlyoffice.com/zh/desktop","https://github.com/hiroi-sora/Umi-OCR"],"office|ocr":["https://pearocr.com/","https://tesseract.projectnaptha.com/","https://web.baimiaoapp.com/","https://ocr.wdku.net/","https://github.com/hiroi-sora/Umi-OCR"],"soft|src":["https://chunjing.app"],"soft|media":["https://potplayer.org/","https://getsharex.com/"],"soft|tool":["https://www.mefcl.com/sougouime.html","https://espanso.org/"],"soft|safe":["https://www.huorong.cn/","https://www.bleachbit.org/","https://veracrypt.io/en/Home.html"],"soft|os":["https://massgrave.dev/","https://www.ventoy.net/"],"soft|batch":["https://ninite.com"],"soft|net":["https://pc.weixin.qq.com/","https://www.todesk.com/download.html"],"soft|browse":["https://www.slimjet.com/cn/dlpage.php"],"soft|edu":["https://anbola.github.io/fenban/","https://anbola.github.io/chengji/"],"plug|net":["https://scriptcat.org/zh-CN/script-show-page/1604"],"plug|vid":["https://www.crxsoso.com/webstore/detail/jfedfbgedapdagkghmgibemcoggfppbb"],"plug|copy":["https://www.crxsoso.com/webstore/detail/cbhljnnfpomfkmhefapcjmjignigcfpn"],"exam|online":["https://wj.qq.com/"],"prep|book":["http://www.dzkbw.com/"],"gov|core":["https://www.smartedu.cn/"],"ai|chat":["https://chat.deepseek.com/"],"ai|search":["https://metaso.cn/"],"media|edit":["https://audiomass.co/","https://www.capcut.cn/"],"media|rec":["https://obsproject.com/"],"media|dl":["https://github.com/yt-dlp/yt-dlp"],"design|cut":["https://github.com/Sanster/IOPaint","https://cleanup.pictures/","https://www.photopea.com/l/zh_cn/","https://picwish.cn/remove-unwanted-object"],"design|tmpl":["https://www.canva.cn/"],"office|pdf":["https://www.pdf-xchange.com/product/pdf-xchange-editor","https://www.bentopdf.com/zh","https://tools.pdf24.org/zh/all-tools","https://stirling.com/app/reader?lng=zh-CN","https://tools.pdf24.org/zh/edit-pdf","https://docsmall.com/","https://www.ilovepdf.com/zh-cn/merge_pdf"],"office|send":["https://www.wenshushu.cn/","https://pairdrop.net/"],"room|interact":["https://easinote.seewo.com/"],"room|pick":["https://www.seewo.com/"],"subject|science":["https://phet.colorado.edu/zh_CN/"],"maker|model":["https://www.i3done.com/zh-cn/product/3done.html","https://www.freecad.org/downloads.php?lang=zh_CN"],"research|lit":["https://xueshu.baidu.com/"],"video|mooc":["https://www.icourse163.org/"],"office|util":["https://gchq.github.io/CyberChef/","https://uutool.cn/","https://www.lddgo.net/","https://tool.lu/","https://try8.cn/"],"design|tool":["https://bulkresizephotos.com/zh","https://squoosh.app/","https://tinypng.com/zh/compress"],"media|clean":["https://github.com/YaoFANGUK/video-subtitle-remover","https://online-video-cutter.com/cn/remove-logo","https://videowatermarkremover.app/"],"media|conv":["https://handbrake.fr/","https://shana.pe.kr/","https://www.aconvert.com/cn/"],"soft|deploy":["https://www.os-easy.com/"],"soft|cast":["https://deskreen.com/","https://vdo.ninja/","https://meet.jit.si/","https://screego.net/","https://github.com/FDH2/UxPlay"],"soft|vote":["https://cryptpad.fr/form/","https://tally.so/","https://www.poll-maker.com/","https://strawpoll.com/","https://arsnova.eu/","https://framadate.org/abc/","https://f.wps.cn/","https://www.socrative.com/","https://wayground.com/"],"soft|xc":["https://www.kylinos.cn/","https://www.uniontech.com/","https://www.kaihong.com/","https://www.openeuler.openatom.cn/zh/"],"office|map":["https://www.zhixi.com/","https://mermaid.live/","https://docs.freeplane.org/"],"office|doc":["https://joplinapp.org/"],"research|data":["https://app.rawgraphs.io/"],"subject|it":["https://vscodium.com/","https://carbon.now.sh/"],"subject|math":["https://fxeditor.codecogs.com/"],"subject|chinese":["https://www.an2.net/tools/worksheet/tianzige","https://zi.tools/zi/%E5%AD%97"],"maker|hw":["https://www.kicad.org/"],"maker|code":["https://godotengine.org/"],"open|repo":["https://github.com/opendatalab/MinerU"],"plug|mgr":["https://www.crxsoso.com/webstore/detail/ndcooeababalnlpkfedmmbbbgkljhpjf"],"soft|must":["https://www.rarlab.com/download.htm","https://raincandy.tech/wpsoffice_2023_x64/","https://www.mefcl.com/sougouime.html","https://massgrave.dev/","https://www.7-zip.org/","https://www.huorong.cn/","https://potplayer.org/","https://www.glenn.delahoy.com/snappy-driver-installer-origin/","https://pc.weixin.qq.com/","https://aka.ms/vs/17/release/vc_redist.x64.exe","https://www.slimjet.com/cn/dlpage.php"]};
+const SEED_VER='1.0.30';
 /* v14：被替换掉的内置旧地址。老用户 localStorage 里已经存过这些，光加新条目会留下僵尸卡片，
    所以同步时先按 URL 摘掉，再补新的。 */
 const SEED_DROP=[
@@ -7191,8 +7309,16 @@ const SEED_DROP=[
   'https://www.freeconvert.com/',
   'https://www.zamzar.com/',
   'https://www.portableappc.com',
-  'https://www.mikeppt.com/'
-
+  'https://www.mikeppt.com/',
+  'https://www.liveworksheets.com/',
+  'https://app.wizer.me/',
+  'https://www.limesurvey.org/',
+  'https://opnform.com/',
+  'https://typebot.com/',
+  'https://formbricks.com/',
+  'https://surveyjs.io/',
+  'https://nocodb.com/',
+  'https://www.5ykj.com/'
 ];
 let SEED_ADDED=0;
 const $=s=>document.querySelector(s);
@@ -7250,7 +7376,7 @@ const P={
    要加新的工作台：把源码塞进 DESK_SRC，这里加一行即可，多层往 subs 里加 */
 const DESK_TREE=[
   {id:'teacher', n:'教师工作台', ic:'bzr', src:'teacher', d:'', subs:[]},
-  {id:'aivideo', n:'AI 视频', ic:'ai', src:'aivideo', d:'', subs:[]},
+  {id:'aivideo', n:'AI 免费额度工作台', sn:'AI 额度台', ic:'ai', src:'aivideo', d:'', subs:[]},
   {id:'chengji', n:'成绩核算', ic:'exam', u:'https://anbola.github.io/chengji/', d:'', subs:[]},
   {id:'fenban',  n:'智能分班', ic:'room', u:'https://anbola.github.io/fenban/',  d:'', subs:[]}
 ];
@@ -7266,9 +7392,8 @@ function findDesk(id){
 }
 
 const FM={free:['free','免费'],open:['open','开源'],quota:['quota','有额度'],part:['part','部分'],over:['over','海外']};
-const DEFAULT_PINNED=[
-'https://www.smartedu.cn/','https://www.doubao.com/chat/','https://chat.deepseek.com/','https://www.capcut.cn/','https://www.tiku.cn/','https://filehelper.weixin.qq.com/','https://basic.smartedu.cn/tchMaterial','https://www.pep.com.cn/','https://metaso.cn/','https://www.canva.cn/','https://easinote.seewo.com/'
-];
+/* v15：常用默认全空 —— 只有点过 / 固定过的站点才会出现 */
+const DEFAULT_PINNED=[];
 
 /* ================= 存储 ================= */
 function defaults(){
@@ -7280,7 +7405,7 @@ function defaults(){
     engines:[],engine:'baidu',searchV2:1,wxCity:'商洛',authUntil:0,
     /* v2：远程数据源（实时更新）与个人同步码 */
     feedUrl:'',feedOn:true,feedVer:'',feedAt:0,
-    feedNotice:'v14 大清洗 · 只留免费好用的',
+    feedNotice:'v19 · 免费度校准 · 纯净替代 +3',
     seedVer:SEED_VER,gone:[],picks:SEED_PICKS,top:JSON.parse(JSON.stringify(SEED_TOP)),pal:'dawn',artOn:true,artLv:'soft',brandTouched:false};
 }
 /* v21：精品软件从「绿色版/便携版/开源替代」改成按用途分组。
@@ -7372,6 +7497,67 @@ function load(){
             w:'免费档有广告、单文件 15MB、每小时约 1-2 次任务；要不限次不上传，用上面 BentoPDF 或 PDF24'}
         };
         m.sites.forEach(function(s){if(s&&FIX14[s.u])Object.assign(s,FIX14[s.u])});
+        /* v15：常用改成「点过才出现」，老存档里那 11 条内置默认一并清掉；
+           用户自己加过额外的星标 / 固定时整份保留，不误删 */
+        const OLD_PIN=['https://www.smartedu.cn/','https://www.doubao.com/chat/','https://chat.deepseek.com/',
+          'https://www.capcut.cn/','https://www.tiku.cn/','https://filehelper.weixin.qq.com/',
+          'https://basic.smartedu.cn/tchMaterial','https://www.pep.com.cn/','https://metaso.cn/',
+          'https://www.canva.cn/','https://easinote.seewo.com/'];
+        if(Array.isArray(m.pinned)&&m.pinned.length===OLD_PIN.length&&
+           m.pinned.every(u=>OLD_PIN.indexOf(u)>=0))m.pinned=[];
+        /* v15：WPS 官方卡补上直链字段（mergeSeed 只补新卡，不刷已有卡字段） */
+        const FIX15={
+          'https://www.wps.cn/':{dl:'https://raincandy.tech/wpsoffice_2023_x64/',dlk:'rel',
+            dls:'雨糖特别版 · 去广告专业版',
+            w:'官方页用来更版本；右下角「直链」去特别版（去广告、自带 VBA、可离线装）。第三方改版非官方分发，装前查毒，学校批量用有合规风险'}
+        };
+        m.sites.forEach(function(s){if(s&&FIX15[s.u])Object.assign(s,FIX15[s.u])});
+        /* v16：问卷只留免登录 —— 老存档里已下架的 8 条离线双击时不能复活 */
+        const DROP16=['https://www.liveworksheets.com/','https://app.wizer.me/',
+          'https://www.limesurvey.org/','https://opnform.com/','https://typebot.com/',
+          'https://formbricks.com/','https://surveyjs.io/','https://nocodb.com/'];
+        m.sites=m.sites.filter(function(s){return s&&DROP16.indexOf(s.u)<0});
+        /* v16：首选清单补齐新 key（老存档没有 soft|must 等），并把用户点名的
+           特别版 / 去广告版按 URL 精确提到第一，用户自定义顺序其余保留 */
+        if(!m.top||typeof m.top!=='object')m.top={};
+        for(const k in SEED_TOP)if(!Array.isArray(m.top[k]))m.top[k]=SEED_TOP[k].slice();
+        const F16={'soft|file':'https://www.rarlab.com/download.htm',
+          'soft|office':'https://raincandy.tech/wpsoffice_2023_x64/',
+          'soft|tool':'https://www.mefcl.com/sougouime.html',
+          'soft|os':'https://massgrave.dev/','soft|safe':'https://www.huorong.cn/',
+          'soft|media':'https://potplayer.org/','soft|net':'https://pc.weixin.qq.com/',
+          'office|pdf':'https://www.pdf-xchange.com/product/pdf-xchange-editor'};
+        for(const k in F16){const a=m.top[k]||[],u=F16[k],i=a.indexOf(u);
+          if(i>0)a.splice(i,1);if(i!==0)a.unshift(u);m.top[k]=a}
+        /* v16：直链卡的来源标签对齐本轮文案（FIX15 里的旧值会被覆盖） */
+        const FIX16={
+          'https://www.wps.cn/':{dls:'雨糖科技 · 去广告'},
+          'https://www.pdf-xchange.com/product/pdf-xchange-editor':{dls:'免登录不限速 · 直装版'},
+          'https://www.microsoft.com/zh-cn/microsoft-365/office-2024':{dls:'需登录 · 限速'}
+        };
+        m.sites.forEach(function(s){if(s&&FIX16[s.u])Object.assign(s,FIX16[s.u])});
+        /* v19（UI V1.12.0）：4 条卡片自述有广告 / 徽章，免费度由「免费」校准为「部分」。
+           按 URL 精确对齐 —— mergeSeed 只补新卡、不刷已有卡字段；只动 f，别覆盖 w/d，
+           否则会抹掉用户在后台自己改过的说明。 */
+        const FIX19TAGS={
+          'https://www.elecfans.com/':{f:'part'},
+          'https://www.iamwawa.cn/':{f:'part'},
+          'https://www.poll-maker.com/':{f:'part'},
+          'https://strawpoll.com/':{f:'part'}
+        };
+        /* v19：4 条卡片的「要无广告用」替代指引也补给老存档。
+           用「不含则追加」而不是整体覆盖，用户在后台自己改过的说明不会被抹掉。 */
+        const ADD19={
+          'https://www.elecfans.com/':'。要无广告用「立创开源硬件平台」或同组 DF 创客社区',
+          'https://www.iamwawa.cn/':'。要无广告用 BentoPDF / PDF24（PDF）、Squoosh（压图）、Excalidraw（白板）',
+          'https://www.poll-maker.com/':'。要无广告用同组 CryptPad / Tally / ARSnova / Framadate',
+          'https://strawpoll.com/':'。要无广告用同组 CryptPad / Tally / ARSnova / Framadate'
+        };
+        m.sites.forEach(function(s){
+          if(!s)return;
+          if(FIX19TAGS[s.u])Object.assign(s,FIX19TAGS[s.u]);
+          if(ADD19[s.u]&&typeof s.w==='string'&&s.w.indexOf(ADD19[s.u])<0)s.w+=ADD19[s.u];
+        });
         const added=mergeSeed(m);
         SEED_ADDED=added;
         try{localStorage.setItem(LS,JSON.stringify(m))}catch(e){}
@@ -7405,7 +7591,7 @@ let byU={};
 function reindex(){byU={};DB.sites.forEach(s=>{byU[s.u]=s})}
 reindex();
 
-const S={view:'home',cat:null,sub:'all',q:'',adminTab:'sites',editKey:null,desk:null,deskOpen:true};
+const S={view:'home',cat:null,sub:'all',q:'',pureOnly:false,adminTab:'sites',editKey:null,desk:null,deskOpen:true};
 /* 登录态三档：关闭密码 > 本机记住30天 > 本次会话（关掉标签页就失效） */
 function logged(){
   try{
@@ -7555,20 +7741,46 @@ function applyLook(){
 /* ================= v13：左侧级联导航 =================
    NAV_GROUPS 只是「呈现分组」，不是新分类：CATS 的 18 个 id、#/c/<id> 路由、
    后台隐藏/排序、sites.json 里的 cats 全部照旧。要改分组只改这张表。 */
+/* v15：精品软件底层 18 个子分类不动，只在呈现层合成 8 个好找的大组。
+   这样 sites.json / CATS / top / 老存档迁移一律零改动。 */
+/* v16：8 组太粗、18 个 t 太细 —— 取中间值「10 组 / 4 档」。
+   档名沿用用户认可的「装机必备 / 机房运维」，办公与教务拆开不再混在一起。
+   纯呈现层：站点 t、CATS、sites.json.cats、路由、老存档迁移一律不动。 */
+const SOFT_SECTIONS=[
+ {id:'must', n:'新机必装',  grp:'装机必备',   ts:null},
+ {id:'sys',  n:'系统与驱动',grp:'装机必备',   ts:['os','batch']},
+ {id:'app',  n:'常用软件',  grp:'常用软件',   ts:['file','tool','browse','src','safe']},
+ {id:'av',   n:'影音图像',  grp:'常用软件',   ts:['media']},
+ {id:'work', n:'办公软件',  grp:'办公与教务', ts:['office']},
+ {id:'edu',  n:'管理与教务',grp:'办公与教务', ts:['edu'], navHide:1},
+ {id:'lab',  n:'机房运维',  grp:'机房运维',   ts:['deploy','push','ctrl']},
+ {id:'cast', n:'网络与投屏',grp:'机房运维',   ts:['net','cast']},
+ {id:'vote', n:'问卷学习单',grp:'机房运维',   ts:['vote']},
+ {id:'xc',   n:'信创国产',  grp:'机房运维',   ts:['xc']}
+];
+function softSec(id){for(let i=0;i<SOFT_SECTIONS.length;i++)if(SOFT_SECTIONS[i].id===id)return SOFT_SECTIONS[i];return null}
+function secSites(sec,all){return sec.ts?all.filter(x=>sec.ts.indexOf(x.t)>=0):all.filter(x=>!!x.must)}
+/* v16：办公效率 / 办公工具 / 插件脚本归一成「办公与效率」，不再塞在精品软件下；
+   「管理与教务」把课堂班务、班主任德育、教务后勤软件（soft|edu 的呈现层直达）聚到一起。 */
 const NAV_GROUPS=[
- {id:'prep',  n:'备课资源', ic:'prep',  co:'#2B6CB8', ids:['gov','prep','gem','exam','subject','open']},
- {id:'grow',  n:'成长研修', ic:'video', co:'#6B3FA0', ids:['video','research','maker']},
- {id:'create',n:'AI 与素材',ic:'ai',    co:'#0E9A8C', ids:['ai','media','design','get']},
- {id:'class', n:'班级管理', ic:'room',  co:'#3F8A32', ids:['room','bzr']},
- {id:'soft',  n:'精品软件', ic:'soft',  co:'#6D7B2F', ids:['soft','office','plug']}
+ {id:'create',n:'AI 与素材', ic:'ai',    co:'#0E9A8C', ids:['ai','media','design','get']},
+ {id:'prep',  n:'备课资源',  ic:'prep',  co:'#2B6CB8', ids:['gov','prep','gem','exam','subject','open']},
+ {id:'grow',  n:'成长研修',  ic:'video', co:'#6B3FA0', ids:['video','research','maker']},
+ {id:'office',n:'办公与效率',ic:'office',co:'#4C6FA5', ids:['office','plug']},
+ {id:'school',n:'管理与教务',ic:'room',  co:'#3F8A32', ids:['room','bzr'],
+   extra:{n:'教务后勤软件',href:'#/c/soft/edu',cid:'soft',sub:'edu'}},
+ {id:'soft',  n:'精品软件',  ic:'soft',  co:'#6D7B2F', ids:['soft']}
 ];
 function navGroupDefault(){
   if(S.view==='desk')return 'desk';
   if(S.view==='cat'&&S.cat){
+    /* soft|edu 的入口挂在「管理与教务」大类下，展开那一组而不是精品软件 */
+    if(S.cat==='soft'&&S.sub==='edu')return 'school';
     for(let i=0;i<NAV_GROUPS.length;i++)
       if(NAV_GROUPS[i].ids.indexOf(S.cat)>=0)return NAV_GROUPS[i].id;
   }
-  return null;
+  /* v16：首页默认展开第一组，别让左侧折叠成一片空白 */
+  return NAV_GROUPS[0].id;
 }
 function navRow(href,name,cnt,cid,on,i,lv){
   return '<a class="nav-i nav-sub nav2-row'+(on?' on':'')+'" href="'+href+'" draggable="true" '
@@ -7586,7 +7798,8 @@ function catNav(){
   NAV_GROUPS.forEach(g=>{
     const kids=g.ids.map(catOf).filter(c=>c&&!isHidden(c.id));
     if(!kids.length)return;
-    const active=here(S.cat)||kids.some(c=>here(c.id));
+    const active=(g.id==='soft'&&S.sub==='edu')?false
+      :(here(S.cat)||kids.some(c=>here(c.id))||(g.extra&&here(g.extra.cid)&&S.sub===g.extra.sub));
     out+='<div class="nav2-grp'+(active?' here':'')+'" data-grp="'+g.id+'">'
       +'<div class="nav-i nav2-h" data-navgrp="'+g.id+'" style="--kg:'+g.co+'" '
         +'title="悬停展开 · 单击全部展开 · 再单击 / 双击折叠">'
@@ -7598,36 +7811,28 @@ function catNav(){
     let i=0;
     if(g.id==='soft'){
       out+=navRow('#/c/soft','全部软件',catCount('soft'),'soft',here('soft')&&S.sub==='all',i++,1);
-      ['软件','装机必备','机房运维'].forEach((bn,bi)=>{
-        const list=(soft.subs||[]).filter(s=>(s[2]||'软件')===bn);
-        if(!list.length)return;
-        const on=here('soft')&&list.some(s=>s[0]===S.sub);
-        out+='<div class="nav-i nav-sub nav2-row nav2-l2'+(on?' open':'')+'" '
-          +'data-navl2="l'+bi+'" style="--lv:1;--i:'+(i++)+'">'
+      /* v17：左侧只要一层悬浮菜单，去掉「装机必备 / 常用软件…」档名小标题 */
+      SOFT_SECTIONS.forEach(s=>{
+        if(s.navHide)return;   /* 教务后勤软件已在「管理与教务」大类下，这里不重复列 */
+        const n=DB.sites.filter(x=>x.c==='soft'&&(s.id==='must'?!!x.must:(s.ts||[s.id]).indexOf(x.t)>=0)).length;
+        if(!n)return;
+        out+='<a class="nav-i nav-sub nav2-row'+(here('soft')&&S.sub===s.id?' on':'')+'" '
+          +'href="#/c/soft/'+esc(s.id)+'" style="--lv:1;--i:'+(i++)+'" title="'+esc(s.n)+'">'
           +'<span class="lic" aria-hidden="true"></span>'
-          +'<span class="n">'+esc(bn)+'</span>'
-          +'<span class="c cnt">'+list.length+'</span>'
-          +'<span class="c caret">'+svg(P.arrow)+'</span></div>'
-          +'<div class="nav2-b2">';
-        list.forEach((s,j)=>{
-          const t=s[0];
-          const n=t==='must'?DB.sites.filter(x=>x.c==='soft'&&x.must).length
-                            :DB.sites.filter(x=>x.c==='soft'&&x.t===t).length;
-          out+='<a class="nav-i nav-sub nav2-row'+(here('soft')&&S.sub===t?' on':'')+'" '
-            +'href="#/c/soft/'+esc(t)+'" style="--lv:2;--i:'+j+'" title="'+esc(s[1])+'">'
-            +'<span class="lic" aria-hidden="true"></span>'
-            +'<span class="n">'+esc(s[1])+'</span><span class="c">'+n+'</span></a>';
-        });
-        out+='</div>';
-      });
-      ['office','plug'].forEach(id=>{
-        const c=catOf(id);if(!c||isHidden(id))return;
-        out+=navRow('#/c/'+id,c.n,catCount(id),id,here(id),i++,1);
+          +'<span class="n">'+esc(s.n)+'</span><span class="c">'+n+'</span></a>';
       });
     }else{
       kids.forEach(c=>{
         out+=navRow('#/c/'+c.id,c.n,catCount(c.id),c.id,here(c.id),i++,1);
       });
+      if(g.extra){
+        const ex=g.extra,n=DB.sites.filter(x=>x.c===ex.cid&&x.t===ex.sub).length;
+        const on=here(ex.cid)&&S.sub===ex.sub;
+        out+='<a class="nav-i nav-sub nav2-row'+(on?' on':'')+'" href="'+esc(ex.href)+'" '
+          +'style="--lv:1;--i:'+(i++)+'" title="'+esc(ex.n)+'">'
+          +'<span class="lic" aria-hidden="true"></span><span class="n">'+esc(ex.n)+'</span>'
+          +'<span class="c">'+n+'</span></a>';
+      }
     }
     out+='</div></div>';
   });
@@ -7715,7 +7920,6 @@ function bindNavGroups(){
 function deskNav(){
   const here=S.view==='desk';
   const flat=deskFlat(DESK_TREE);
-  const inner=flat.filter(x=>!!x.src), outer=flat.filter(x=>!!(x.u&&!x.src));
   const active=here||flat.some(x=>S.desk===x.id);
   let h='<div class="nav2-grp'+(active?' here':'')+'" data-grp="desk">'
     +'<div class="nav-i nav2-h" data-navgrp="desk" style="--kg:#C2703C" '
@@ -7725,28 +7929,16 @@ function deskNav(){
       +'<span class="c cnt">'+flat.length+'</span>'
       +'<span class="c caret">'+svg(P.down)+'</span>'
     +'</div><div class="nav2-b">';
-  let i=0;
-  [['内嵌工作台',inner],['独立外链',outer]].forEach((pair,bi)=>{
-    const list=pair[1];if(!list.length)return;
-    const on=here&&list.some(x=>x.id===S.desk);
-    h+='<div class="nav-i nav-sub nav2-row nav2-l2'+(on?' open':'')+'" '
-      +'data-navl2="d'+bi+'" style="--lv:1;--i:'+(i++)+'">'
+  /* v15：去掉「内嵌工作台 / 独立外链」这层无用分组，四个工具直接平铺 */
+  flat.forEach((x,j)=>{
+    const ext=!!(x.u&&!x.src), on2=here&&S.desk===x.id;
+    h+='<a class="nav-i nav-sub nav2-row'+(ext?' nav-desk':'')+(on2?' on':'')+'" '
+      +(ext?'href="'+esc(x.u)+'" target="_blank" rel="noopener"':'href="#/desk/'+esc(x.id)+'"')
+      +' data-desk="'+esc(x.id)+'" style="--lv:1;--i:'+j+'" '
+      +'title="'+esc(x.d||x.n)+'">'
       +'<span class="lic" aria-hidden="true"></span>'
-      +'<span class="n">'+pair[0]+'</span>'
-      +'<span class="c cnt">'+list.length+'</span>'
-      +'<span class="c caret">'+svg(P.arrow)+'</span></div>'
-      +'<div class="nav2-b2">';
-    list.forEach((x,j)=>{
-      const ext=!!(x.u&&!x.src), on2=here&&S.desk===x.id;
-      h+='<a class="nav-i nav-sub nav2-row'+(ext?' nav-desk':'')+(on2?' on':'')+'" '
-        +(ext?'href="'+esc(x.u)+'" target="_blank" rel="noopener"':'href="#/desk/'+esc(x.id)+'"')
-        +' data-desk="'+esc(x.id)+'" style="--lv:2;--i:'+j+'" '
-        +'title="'+esc(x.d||x.n)+'">'
-        +'<span class="lic" aria-hidden="true"></span>'
-        +'<span class="n">'+esc(x.n)+'</span>'
-        +(ext?'<span class="c out">'+svg(P.out)+'</span>':'')+'</a>';
-    });
-    h+='</div>';
+      +'<span class="n">'+esc(x.n)+'</span>'
+      +(ext?'<span class="c out">'+svg(P.out)+'</span>':'')+'</a>';
   });
   return h+'</div></div>';
 }
@@ -7801,7 +7993,7 @@ function renderSide(){
    +'<div class="nav" id="nav2"><span class="nav-pill"></span>';
   h+=catNav();
   h+='</div>'
-   +'<div class="nav-tip">'+svg(P.up)+'<span>悬停展开 · 单击全部展开 · 再单击 / 双击折叠 · 拖动排序</span></div>'
+   +'<div class="nav-tip">'+svg(P.up)+'<span>悬停展开 · 单击全开 · 拖动排序</span></div>'
    +'<div class="nav-sep"></div>';
   $('#side').innerHTML=h;
   paintTopStats();
@@ -8034,23 +8226,27 @@ function itemHTML(x){
   const ver=x.v==='sp'?'<i class="ver sp">特别版</i>':(x.v?'<i class="ver off">官方版</i>':'');
   let meta='';
   if(x.dl){
-    const kind=x.dlk==='pan'?'蓝奏云':(x.dlk==='bd'?'百度网盘':(x.dlk==='rel'?'官方发布页':'直链下载'));
-    meta='<span class="dmeta '+(x.dlk||'direct')+'"><b>'+kind+'</b>'
-      +(x.dls?'<em>'+esc(x.dls)+'</em>':'')
-      +(x.dlp?'<em class="pw">提取码 '+esc(x.dlp)+'</em>':(x.dlk==='pan'?'<em>免密</em>':''))
+    /* v16：来源短标签 + 提取码 + 长说明压成底部一行，不再各占一行把卡片撑高 */
+    const src=(x.dlk==='pan'?'蓝奏云':(x.dlk==='bd'?'百度网盘':(x.dlk==='rel'?'特别版':'直链')));
+    meta='<span class="dmeta '+(x.dlk||'direct')+'"><b>'+esc(src)+'</b>'
+      /* v16.1：名称行被 v8 的 nowrap 裁切，免费度标签挪到底部信息行 */
+      +(fm[1]?'<em class="df'+(isPure(x)?' pure':'')+'">'+esc(fm[1])+'</em>':'')
+      +(x.dlp?'<em class="pw" title="提取码">码 '+esc(x.dlp)+'</em>':'')
+      +(x.dls?'<em class="dsrc">'+esc(x.dls)+'</em>':(x.dlk==='pan'?'<em>免密</em>':''))
       +'</span>';
   }else if(x.t==='setup'){
     meta='<span class="dmeta none"><b>官网</b><em>去官方页面取最新版</em></span>';
   }
   const dcls=x.dlk==='pan'?'pan':(x.dlk==='bd'?'bd':(x.dlk==='rel'?'rel':'dir'));
+  /* v15：右下角统一叫「直链」；主卡点官方链接，直链点直接下载 */
   const btn=x.dl
     ?'<button class="dl on '+dcls+'" data-dl="'+esc(x.dl)+'" data-u="'+esc(x.u)+'" title="'
-      +(x.dlk==='pan'?'打开蓝奏云下载页':(x.dlk==='bd'?'打开发布者的网盘分享':'直接下载安装包'))+(x.dlp?'，提取码 '+esc(x.dlp):'')+'">'
-      +svg(P.dl,'dl-ic')+'<span>'+(x.dlk==='pan'?'蓝奏':(x.dlk==='bd'?'网盘':(x.dlk==='rel'?'发布页':'直链')))+'</span></button>'
+      +esc(x.dls||'直接下载安装包')+(x.dlp?'，提取码 '+esc(x.dlp):'')+'">'
+      +svg(P.dl,'dl-ic')+'<span>直链</span></button>'
     :'';
-  return '<a class="item'+(x.dl?' has-dl':'')+'" href="'+esc(x.u)+'" target="_blank" rel="noopener" data-visit="'+esc(x.u)+'" title="'+esc(x.d||x.n)+'">'
+  return '<a class="item'+(x.dl?' has-dl':'')+(isPure(x)?' pure':'')+'" href="'+esc(x.u)+'" target="_blank" rel="noopener" data-visit="'+esc(x.u)+'" title="'+esc((x.d||x.n)+(isPure(x)?' · 纯净 / 绿色 / 特别版':''))+'">'
     +logo(x.u,x.n,'sm',x.c)
-    +'<span class="bd"><span class="nm">'+hi(x.n)+ver+(x.must?'<i class="must">必备</i>':'')+(topFirst(x)?'<i class="must top1">首选</i>':'')+(x.v==='sp'?'':'<i class="bg '+fm[0]+'">'+fm[1]+'</i>')+'</span>'
+    +'<span class="bd"><span class="nm">'+hi(x.n)+ver+(x.must?'<i class="must">必备</i>':'')+(topFirst(x)?'<i class="must top1">首选</i>':'')+(x.v==='sp'?'':'<i class="bg '+fm[0]+(isPure(x)?' pure':'')+'">'+fm[1]+'</i>')+'</span>'
     +'<span class="ds">'+hi(x.d||'')+'</span>'+meta+'</span>'
     +btn
     +'<button class="fav '+(on?'on':'')+'" data-fav="'+esc(x.u)+'" title="'+(on?'取消收藏':'收藏')+'">'+starSvg(on)+'</button></a>';
@@ -8066,10 +8262,6 @@ function pinnedList(){
   const base=DB.pinned.filter(ok);
   const set=base.slice();
   Object.keys(DB.visits).forEach(u=>{if(ok(u)&&set.indexOf(u)<0)set.push(u)});
-  for(let i=0;i<DEFAULT_PINNED.length;i++){
-    if(set.length>=12)break;
-    const u=DEFAULT_PINNED[i];if(ok(u)&&set.indexOf(u)<0)set.push(u);
-  }
   const ord={};base.forEach((u,i)=>{ord[u]=i});
   set.sort((a,b)=>{
     const va=DB.visits[a]||0,vb=DB.visits[b]||0;
@@ -8127,7 +8319,7 @@ function renderHome(){
         return '<a class="wb-i" '+(ext?'href="'+esc(x.u)+'" target="_blank" rel="noopener"':'href="#/desk/'+x.id+'"')
           +' title="'+esc(x.n)+'">'
           +'<span class="wb-ic">'+svg(P[x.ic]||P.grid)+'</span>'
-          +'<span class="wb-tx"><b>'+esc(x.n)+'</b></span>'
+          +'<span class="wb-tx"><b>'+esc(x.sn||x.n)+'</b></span>'
           +'<span class="wb-ar">'+(ext?'↗':'→')+'</span></a>';
       }).join('')
     +'</aside>'
@@ -8145,7 +8337,9 @@ function renderHome(){
       +logo(x.u,x.n,'lg2',x.c)+'<span class="nm">'+esc(x.s||x.n)+'</span>'
       +'<button class="star '+(on?'on':'')+'" data-pin="'+esc(x.u)+'" title="'+(on?'取消固定':'固定到常用')+'">'+starSvg(on)+'</button></a>';
   });
-  h+='</div></section>';
+  h+='</div>';
+  if(!pins.length)h+='<p class="pin-empty">常用还是空的 · 点开任意站点，或在卡片上点星标，就会自己攒到这里</p>';
+  h+='</section>';
 
   h+='<section class="sec"><div class="sec-h"><h2>按场景走</h2></div><div class="flows">';
   if(DB.showFlows!==false){
@@ -8184,7 +8378,7 @@ function renderHome(){
     h+='</div>';
   });
   h+='</section>';
-  h+='<p class="foot-note">链接会失效，每学期点一遍 · 数据在管理后台改。</p>';
+  h+='<p class="foot-note">每一条都试过，也会失效 · 死链打不开就 QQ 反馈 <b>903286351</b> · 数据在管理后台改。</p>';
   h+='<p class="sign">冬阳汇 · 每一条，都替你试过　<span>陕西 · 商洛 · 丹凤</span></p>';
   $('#view').innerHTML=h;
   observeReveal();
@@ -8203,17 +8397,46 @@ function topFirst(x){
   const a=topList((x.c||'')+'|'+(x.t||''));
   return !!a&&a[0]===x.u;
 }
+/* v16：「新机必装」跨组精选有独立首选清单，特别版 / 去广告版 / 直装版排最前 */
+function mustRank(x){
+  const a=topList('soft|must');
+  if(!a)return 99;
+  const i=a.indexOf(x.u);
+  return i<0?99:i;
+}
+/* ==================== v18 · 纯净优先 ====================
+   纯呈现层判定：不改站点数据、不动 SEED 与老存档，所有用户打开即生效。
+   名称命中即算；描述命中要求「正面词」且不含「广告 / 捆绑 / 登录 / 付费」负面词，
+   避免把「要无广告用腾讯问卷」这类推荐语误判成纯净。 */
+/* 「绿色」单独会误伤站名（如「绿色圃中小学教育网」是课件站，不是绿色软件），
+   只认「绿色软件 / 绿色版」这类分发形态。 */
+const PURE_NAME=/纯净|绿色软件|绿色版|去广告|无广告|特别版|精简|直装|汉化|便携|去弹窗|免安装|免广告/;
+const PURE_GOOD=/无捆绑|不弹窗|解压即用|免安装|不联网|无会员|免登录不限速|全程无|单文件|无广告/;
+const PURE_BAD=/带广告|广告多|有广告|夹带|要无广告用|限速|需登录|要登录|需会员|要付费|收费/;
+function isPure(x){
+  if(x.v==='sp'||PURE_NAME.test(x.n||''))return true;
+  const t=(x.d||'')+' '+(x.w||'');
+  return PURE_GOOD.test(t)&&!PURE_BAD.test(t);
+}
+/* 只作排序最后一档：must → 分组首选 → 纯净优先，不越过用户点名白名单 */
+function pureRank(x){return isPure(x)?0:1}
 /* ================= 分类页 ================= */
 function renderCat(){
   const c=catOf(S.cat);
   if(!c){location.hash='#/';return}
   const all=catSites(c.id).slice()
     /* 「必备」永远第一；其余按分组首选清单排，稳定排序保留原顺序 */
-    .sort((a,b)=>(b.must?1:0)-(a.must?1:0)||topRank(a)-topRank(b));
-  const list=S.sub==='all'?all:(S.sub==='must'?all.filter(x=>x.must):all.filter(s=>s.t===S.sub));
+    .sort((a,b)=>(b.must?1:0)-(a.must?1:0)||mustRank(a)-mustRank(b)||topRank(a)-topRank(b)||pureRank(a)-pureRank(b));
+  const sec=(c.id==='soft')?softSec(S.sub):null;
+  let list=S.sub==='all'?all:(S.sub==='must'?all.filter(x=>x.must)
+    :(sec?secSites(sec,all):all.filter(s=>s.t===S.sub)));
+  /* v18：一键只看绿色 / 纯净 / 免费 / 特别版，chips 计数仍显示全量做参照 */
+  if(S.pureOnly)list=list.filter(isPure);
   let h='<div class="catpage cat-'+c.id+'" style="--cc:'+c.co+';--cardc:'+c.co+';--ca:var(--card-'+(CAT_ART[c.id]||'a1')+')"><div class="crumb"><a href="#/">全部资源</a>'+svg(P.arrow,'cr-arrow')+'<span>'+c.n+'</span></div>'
     +'<div class="cat-head"><span class="cc-ic">'
-    +svg(P[c.ic]||P.prep)+'</span><div><h1>'+c.n+'</h1><p>'+esc(c.d)+' · '+all.length+' 个站点</p></div></div>';
+    +svg(P[c.ic]||P.prep)+'</span><div><h1>'+c.n+'</h1><p>'+esc(c.d)+' · '+all.length+' 个站点</p></div>'
+    +'<button class="pure-toggle'+(S.pureOnly?' on':'')+'" type="button" data-pureonly="1" title="只看绿色 / 纯净 / 免费 / 特别版">'
+    +'<i></i><span>只看纯净</span><b>'+all.filter(isPure).length+'</b></button></div>';
   h+=searchBox(true);
   /* 装机必备：顶上给一个整包入口，点一下把运行库/驱动/激活一整套拿走 */
   if(c.id==='soft'&&S.sub==='must'){
@@ -8227,6 +8450,21 @@ function renderCat(){
   }
   if(c.warn)h+='<details class="warn"><summary>'+svg(P.shield)+'使用提示</summary><p>'+esc(c.warn)+'</p></details>';
   /* v13：信创精选后把「谁最可能统一」直接摆出来，别让人再去点使用提示 */
+  /* v16：问卷筛选结论直接摆出来，别让人误以为剩下的全都零账号 */
+  if(c.id==='soft'&&S.sub==='vote')h+='<div class="vote-verdict">'
+    +'<b>筛选结论</b>'
+    +'<span><i>零账号</i>师生都不注册，发链接就填，结果实时成图</span>'
+    +'<span><i>一个码</i>教师要免费账号，学生免登录但要房间号 / 游戏码</span>'
+    +'<span><i>已剔除</i>两端登录、开源引擎、免费档无图表、付费墙重的 8 条</span>'
+    +'<em>机房没手机：国内收集表别开「群收集 / 填写需登录」，一开就要微信 / QQ 身份</em>'
+    +'</div>';
+  /* v16：教学管控三条路摆清楚，别再去找所谓破解版 */
+  if(c.id==='soft'&&S.sub==='lab')h+='<div class="vote-verdict">'
+    +'<b>机房管控</b>'
+    +'<span><i>商业授权</i>极域 / 红蜘蛛按点数买，官网可申请试用</span>'
+    +'<span><i>开源免费</i>Veyon 免授权、跨平台，机房断网也能用</span>'
+    +'<em>网上「极域破解版」实测多为学生摆脱教师控制的小工具，不是教师端安装包</em>'
+    +'</div>';
   if(c.id==='soft'&&S.sub==='xc')h+='<div class="xc-verdict">'
     +'<b>收敛判断</b>'
     +'<span><i>桌面</i>短期不统一 · 银河麒麟 / 统信 UOS 双雄</span>'
@@ -8236,26 +8474,33 @@ function renderCat(){
     +'</div>';
   h+='<div class="chips">';
   h+='<a class="chip '+(S.sub==='all'?'on':'')+'" href="#/c/'+c.id+'">全部 <span class="n">'+all.length+'</span></a>';
-  /* v12：子分类带第三项分组名，切换时插一行小标题，形成「精品软件 → 装机必备 / 机房运维 → 具体分组」 */
-  let lastG=(c.subs[0]&&c.subs[0][2])||'';
-  c.subs.forEach(s=>{
-    const n=s[0]==='must'?all.filter(x=>x.must).length:all.filter(x=>x.t===s[0]).length;
-    if(!n)return;
-    const grp=s[2]||'';
-    if(grp&&grp!==lastG){h+='<span class="chip-grp">'+esc(grp)+'</span>';lastG=grp}
-    h+='<a class="chip '+(S.sub===s[0]?'on':'')+'" href="#/c/'+c.id+'/'+s[0]+'">'+s[1]+' <span class="n">'+n+'</span></a>';
-  });
+  /* v17：chips 一律横排一行流，不再插「装机必备 / 常用软件…」竖向小标题 */
+  if(c.id==='soft'){
+    SOFT_SECTIONS.forEach(s=>{
+      const n=secSites(s,all).length;if(!n)return;
+      h+='<a class="chip '+(S.sub===s.id?'on':'')+'" href="#/c/'+c.id+'/'+s.id+'">'+s.n+' <span class="n">'+n+'</span></a>';
+    });
+  }else{
+    c.subs.forEach(s=>{
+      const n=s[0]==='must'?all.filter(x=>x.must).length:all.filter(x=>x.t===s[0]).length;
+      if(!n)return;
+      h+='<a class="chip '+(S.sub===s[0]?'on':'')+'" href="#/c/'+c.id+'/'+s[0]+'">'+s[1]+' <span class="n">'+n+'</span></a>';
+    });
+  }
   h+='</div><div class="sublist">';
   if(!list.length){
     h+=emptyHTML('这个分类暂时是空的','去后台添加站点，或换个分类看看','#/','回到全部');
   }else if(S.sub==='all'){
-    c.subs.forEach((s,gi)=>{
-      if(s[0]==='must')return; /* 跨组精选，点 chip 单独看，全部页不重复出卡 */
-      const g=all.filter(x=>x.t===s[0]);
-      if(!g.length)return;
-      const gt=(s[2]&&s[2]!=='软件')?esc(s[2])+' · ':'';
-      h+='<div class="sgroup reveal" style="transition-delay:'+(gi*50)+'ms"><div class="sgh"><i></i><b>'+gt+s[1]+'</b><span>'+g.length+'</span></div><div class="items">';
-      g.forEach(x=>{h+=itemHTML(x)});
+    const groups=(c.id==='soft')
+      ?SOFT_SECTIONS.filter(s=>s.id!=='must').map(s=>({id:s.id,n:s.n,ts:s.ts,grp:s.grp||''}))
+      :c.subs.map(s=>({id:s[0],n:s[1],ts:[s[0]],grp:s[2]}));
+    groups.forEach((g,gi)=>{
+      if(g.id==='must')return; /* 跨组精选，点 chip 单独看，全部页不重复出卡 */
+      const arr=g.ts?list.filter(x=>g.ts.indexOf(x.t)>=0):list.filter(x=>x.t===g.id);
+      if(!arr.length)return;
+      /* v17：去掉「装机必备 · 」这类档名前缀，组名本身就够清楚 */
+      h+='<div class="sgroup reveal" style="transition-delay:'+(gi*50)+'ms"><div class="sgh"><i></i><b>'+esc(g.n)+'</b><span>'+arr.length+'</span></div><div class="items">';
+      arr.forEach(x=>{h+=itemHTML(x)});
       h+='</div></div>';
     });
   }else{
@@ -8517,6 +8762,11 @@ document.addEventListener('click',e=>{
     return}
   const nl=e.target.closest('[data-nolink]');
   if(nl){e.preventDefault();toast('这个分组下面还没有内容');return}
+
+  const po=e.target.closest('[data-pureonly]');
+  if(po){e.preventDefault();e.stopPropagation();
+    S.pureOnly=!S.pureOnly;render();
+    toast(S.pureOnly?'只看纯净 / 绿色 / 特别版':'已显示全部');return}
 
   const pb=e.target.closest('[data-pin]');
   if(pb){e.preventDefault();e.stopPropagation();
@@ -9291,7 +9541,7 @@ function adPins(){
     +'<p class="hint">首页常用区最多显示 12 个。这里勾选的会优先固定在最前面，其余按实际访问次数自动补齐 —— 用得多自然排前面，不用手动管。</p>'
     +'<div class="tbar"><input class="inp w200" id="pSearch" placeholder="搜站点…" value="'+esc(S.pq)+'">'
     +'<span class="sp"></span><span style="font-size:12px;color:var(--text3)">已固定 '+cur.length+' 个</span>'
-    +'<button class="btn sm" id="pReset">恢复默认</button></div>';
+    +'<button class="btn sm" id="pReset">清空常用</button></div>';
   h+='<div class="row" style="border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px">';
   if(!cur.length)h+='<span style="font-size:12px;color:var(--text3)">还没有固定任何站点，从下方列表勾选</span>';
   cur.forEach(u=>{
@@ -9825,7 +10075,7 @@ document.addEventListener('click',e=>{
   }
 
   if(t.closest('#pReset')){
-    DB.pinned=DEFAULT_PINNED.slice();save();renderAdBody();toast('已恢复默认常用');return;
+    DB.pinned=[];save();renderAdBody();toast('已清空常用 · 点过的站点会自己攒回来');return;
   }
   if(t.closest('#adSync')){
     const n=mergeSeed(DB);

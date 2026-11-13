@@ -1,8 +1,8 @@
 {
  "site": "冬阳汇 · 站点数据源",
- "ver": "2026.11.07-6",
- "updated": "2026-11-07",
- "note": "v14 网址大清洗 · 删 47 条收费墙/同质/空壳 · 补 26 条开源纯净工具 · 五套高对比配色",
+ "ver": "2026.11.13-1",
+ "updated": "2026-11-13",
+ "note": "v19：4 条带广告卡片免费度改「部分」并补无广告替代指引；新增 uBlock Origin Lite / 立创开源硬件平台 / AutoHotkey 三条纯净工具。",
  "cats": [
   {
    "id": "gov",
@@ -752,9 +752,18 @@
   "https://www.freeconvert.com/",
   "https://www.zamzar.com/",
   "https://www.portableappc.com",
-  "https://www.mikeppt.com/"
+  "https://www.mikeppt.com/",
+  "https://www.liveworksheets.com/",
+  "https://app.wizer.me/",
+  "https://www.limesurvey.org/",
+  "https://opnform.com/",
+  "https://typebot.com/",
+  "https://formbricks.com/",
+  "https://surveyjs.io/",
+  "https://nocodb.com/",
+  "https://www.5ykj.com/"
  ],
- "notice": "v14 大清洗 · 只留免费好用的",
+ "notice": "v19 · 免费度校准 · 纯净替代 +3",
  "pinned": [],
  "sites": [
   {
@@ -954,16 +963,6 @@
    "t": "xueji",
    "f": "free",
    "d": "教资笔试面试报名、成绩查询",
-   "w": "",
-   "s": ""
-  },
-  {
-   "n": "莲山课件",
-   "u": "https://www.5ykj.com/",
-   "c": "prep",
-   "t": "plan",
-   "f": "part",
-   "d": "老牌课件站，资源沉淀多",
    "w": "",
    "s": ""
   },
@@ -1953,8 +1952,8 @@
    "c": "media",
    "t": "edit",
    "f": "free",
-   "d": "国内最顺手，AI 字幕/抠像/朗读",
-   "w": "导出无水印；内置素材仅限剪映内使用",
+   "d": "官方最新版 · 中文免费",
+   "w": "官网只发最新版。5.9 / 6.0.1 是官方历史版本号，不是「特别版」；网上叫「全功能解锁绿色版」的才是第三方改版，本轮实测一条 123 网盘直链已 404、资源页带违规提示，来路不明且随时失效，装前查毒。有可信蓝奏/123 直链可自己填到后台「直链」，主卡仍点官网。",
    "s": ""
   },
   {
@@ -2494,8 +2493,25 @@
    "t": "doc",
    "f": "free",
    "d": "本地办公+云文档，国内兼容性好",
-   "w": "",
-   "s": ""
+   "w": "官方卡留着更新用；右下角直链是雨糖科技去广告专业版（作者站点直下，免登录不限速）。属第三方改版、非官方分发，装前查毒，学校批量用有合规风险。",
+   "s": "",
+   "dl": "https://raincandy.tech/wpsoffice_2023_x64/",
+   "dlk": "rel",
+   "dls": "雨糖科技 · 去广告"
+  },
+  {
+   "n": "PDF-XChange PDF 编辑器",
+   "u": "https://www.pdf-xchange.com/product/pdf-xchange-editor",
+   "c": "office",
+   "t": "pdf",
+   "f": "part",
+   "v": "off",
+   "d": "批注 / 编辑 / OCR，老机器也快",
+   "w": "官方卡留着看版本；右下角直链是蓝奏云直装版 PDFXE.exe，免登录不限速，本轮实测有效。属第三方改版、非官方分发，装前查毒，学校批量用有合规风险。",
+   "s": "",
+   "dl": "https://shine.lanzouu.com/iNLR33e4vzjc",
+   "dlk": "pan",
+   "dls": "免登录不限速 · 直装版"
   },
   {
    "n": "iLovePDF",
@@ -2675,6 +2691,26 @@
    "f": "free",
    "d": "表单/报名/统计，填的人不用账号，结果自动进表格",
    "w": "",
+   "s": ""
+  },
+  {
+   "n": "ClassTools 课堂游戏",
+   "u": "https://www.classtools.net/",
+   "c": "room",
+   "t": "interact",
+   "f": "part",
+   "d": "填词 / 连连看 / 吃豆人，60+ 课堂游戏模板",
+   "w": "免登录就能用基础模板；英文界面，免费档有广告、带锁的模板要付费，别指望全免费",
+   "s": ""
+  },
+  {
+   "n": "课堂工具箱",
+   "u": "https://classtool.cn/tools/",
+   "c": "room",
+   "t": "pick",
+   "f": "free",
+   "d": "随机点名 / 分组 / 转盘 / 计时 / 座位表，打开就用",
+   "w": "免注册、中文、大屏适配，投屏直接上课；官网自述名单只存本机浏览器、断网也能用，重要名单自己留一份。官网写的是「限时免费」，别当成永久承诺",
    "s": ""
   },
   {
@@ -2865,6 +2901,16 @@
    "f": "free",
    "d": "家长学校课程与家庭教育案例",
    "w": "开家长会找素材，比网上搜的靠谱",
+   "s": ""
+  },
+  {
+   "n": "Polypad 虚拟教具",
+   "u": "https://polypad.amplify.com/",
+   "c": "subject",
+   "t": "math",
+   "f": "free",
+   "d": "分数条 / 天平 / 七巧板 / 数轴，拖着讲数学",
+   "w": "打开就能拖放，注册只为保存作品；原 Mathigon 旧址已迁到 Amplify，别再收藏 mathigon.org/polypad",
    "s": ""
   },
   {
@@ -3223,8 +3269,8 @@
    "c": "soft",
    "t": "ctrl",
    "f": "part",
-   "d": "屏幕广播、锁屏肃静、文件分发、远程开关机，国内机房装得最多",
-   "w": "按点数授权。买之前先要试用版跑一周，重点看学生机有没有掉线、广播花屏",
+   "d": "屏幕广播 · 锁屏 · 文件分发",
+   "w": "按点数授权，官网可申请试用版先跑一周，重点看学生机掉线与广播花屏。想完全免费免授权，用下面 Veyon（开源）或红蜘蛛。网上流传的「极域破解版」实测多为学生用来摆脱教师控制的小工具，不是教师端安装包，别装错。你手上有可信蓝奏/123 直装包，在后台「站点编辑 → 直链」填进去，右下角立刻出现下载按钮。",
    "s": ""
   },
   {
@@ -3367,10 +3413,10 @@
    "c": "soft",
    "t": "vote",
    "f": "free",
-   "d": "国外免费表单，填答零登录、零广告、无限份数，界面最干净",
-   "w": "老师用邮箱注册（不用手机号），学生端就是一张纯白表单，不弹任何东西。适合投屏时给学生看。服务器在国外，机房网络要先试一次通不通",
+   "d": "填答零登录，柱图饼图看结果",
+   "w": "学生点链接就填、无需任何身份；Form Insights 免费出柱图/饼图。注意保存表单、查看提交数据通常要教师注册一个免费账号。",
    "s": "",
-   "g": "1|师生零账号 · 打开就填"
+   "g": "1|师生零账号 · 发链接就填"
   },
   {
    "n": "CryptPad 表单",
@@ -3378,10 +3424,10 @@
    "c": "soft",
    "t": "vote",
    "f": "open",
-   "d": "连老师都不用注册：打开就能建，链接一发学生就填，端到端加密",
-   "w": "开源、免账号、匿名就能建表单，这是唯一「师生双方都不用注册」的方案。缺点是数据存在加密链接里，别人拿到链接就能看，别放成绩等敏感信息",
+   "d": "匿名建表，链接一发就填",
+   "w": "师生都不用账号；结果实时柱状图，可导出 CSV/JSON。导出到表格后不会随新答卷自动更新，看活数据用内置 Responses 页。",
    "s": "",
-   "g": "1|师生零账号 · 打开就填"
+   "g": "1|师生零账号 · 发链接就填"
   },
   {
    "n": "银河麒麟",
@@ -3698,6 +3744,16 @@
    "s": ""
   },
   {
+   "n": "立创开源硬件平台",
+   "u": "https://oshwhub.com/",
+   "c": "maker",
+   "t": "tut",
+   "f": "free",
+   "s": "",
+   "d": "开源电路 / PCB 工程库，电赛国奖作品合集",
+   "w": "中文，打开就能看工程与原理图，免登录；「电赛国奖作品合集」「AI 创意硬件合集」适合创客课找题目。站内「开源集市」卖开发板，看工程不花钱；要编辑 EDA 或下载源文件才需登录。库里的「立创 EDA」是画图工具，这条是找项目参考"
+  },
+  {
    "n": "DF 创客社区",
    "u": "https://mc.dfrobot.com.cn/",
    "c": "maker",
@@ -3712,9 +3768,9 @@
    "u": "https://www.elecfans.com/",
    "c": "maker",
    "t": "tut",
-   "f": "free",
+   "f": "part",
    "d": "电子硬件老牌门户，电路、单片机、开源项目与资料库",
-   "w": "找电路图和芯片手册快；广告多，让学生只点「资料下载」和「论坛」两个入口",
+   "w": "找电路图和芯片手册快；广告多，让学生只点「资料下载」和「论坛」两个入口。要无广告用「立创开源硬件平台」或同组 DF 创客社区",
    "s": ""
   },
   {
@@ -4087,6 +4143,16 @@
    "d": "国产，支持后台脚本与定时任务",
    "w": "国内访问快，脚本市场在 scriptcat.org",
    "s": ""
+  },
+  {
+   "n": "uBlock Origin Lite 去广告",
+   "u": "https://microsoftedge.microsoft.com/addons/detail/ublock-origin-lite/cimighlppcgcoapaliogpjjdehbnofhn",
+   "c": "plug",
+   "t": "ad",
+   "f": "open",
+   "s": "",
+   "d": "Edge 官方商店直达，开源免费去广告，装上就清净",
+   "w": "GPLv3 开源、完全免费、不收捐赠、不收集个人数据，MV3 版适配新版 Edge / Chrome。完整版 uBlock Origin 因 Manifest V3 在 Edge 已不兼容、将被移除，别再找旧链接；ublockorigin.com 自称非官方独立指南，别从那里装。Lite 默认过滤强度略低于完整版，某站拦不掉就在弹窗把模式调到 Optimal / Complete"
   },
   {
    "n": "AdGuard 广告拦截器",
@@ -5015,6 +5081,16 @@
    "d": "开源看图，比系统照片查看器快一档，支持格式最全",
    "w": "Win11 自带的照片打开大图要转圈，这个秒开；装完把它设为 gif / webp 的默认打开方式",
    "s": ""
+  },
+  {
+   "n": "AutoHotkey 自动化",
+   "u": "https://www.autohotkey.com/",
+   "c": "soft",
+   "t": "tool",
+   "f": "open",
+   "s": "",
+   "d": "开源脚本，机房批量快捷键与自动化",
+   "w": "绿色免安装、不联网也能跑，写几行 .ahk 就能批量改键 / 填表 / 开机自启；无广告、无捆绑。英文界面，要自己写脚本；下载页 autohotkey.com/download 实测可达"
   },
   {
    "n": "Notepad3 文本编辑",
@@ -6705,31 +6781,9 @@
    "c": "soft",
    "t": "vote",
    "f": "open",
-   "d": "不用注册，建完就发链接",
-   "w": "师生双方都不用账号，结果自动汇总成统计表。法国公益站，机房网络先试一次通不通",
-   "g": "1|师生零账号 · 打开就填"
-  },
-  {
-   "n": "Liveworksheets 互动学习单",
-   "s": "",
-   "u": "https://www.liveworksheets.com/",
-   "c": "soft",
-   "t": "vote",
-   "f": "part",
-   "d": "学习单自动批改出成绩",
-   "w": "教师注册做单，学生用链接/班级码免登录做，系统自动判分并生成成绩表。国内偶有反爬，先试连通",
-   "g": "3|学习单 · 自动批改看板"
-  },
-  {
-   "n": "Wizer.me 学习单",
-   "s": "",
-   "u": "https://app.wizer.me/",
-   "c": "soft",
-   "t": "vote",
-   "f": "part",
-   "d": "互动学习单，自动出班级数据",
-   "w": "教师注册，学生用班级码免注册加入；自动批改、按题看正确率，免费档限量",
-   "g": "3|学习单 · 自动批改看板"
+   "d": "免登录排期投票，结果成图",
+   "w": "师生零账号、无广告；结果在线图形化。只做约时间/选项投票，不是完整问卷；表单默认 180 天后删除。",
+   "g": "1|师生零账号 · 发链接就填"
   },
   {
    "n": "GoFormative",
@@ -6738,9 +6792,9 @@
    "c": "soft",
    "t": "vote",
    "f": "quota",
-   "d": "全班答题实时看板",
-   "w": "教师注册发班级码，学生免注册加入；教师端逐人实时看答题过程并导出成绩",
-   "g": "3|学习单 · 自动批改看板"
+   "d": "实时答题看板，有频次图",
+   "w": "教师免费账号；常规要学生建账号+6 位 Join Code，Guest 免登录仅一次性且成绩不进 Tracker。免费档报告只回溯 14 天。",
+   "g": "2|学生免登录 · 教师要账号"
   },
   {
    "n": "Socrative 课堂测验",
@@ -6749,9 +6803,9 @@
    "c": "soft",
    "t": "vote",
    "f": "quota",
-   "d": "房间号进去就答，实时报告",
-   "w": "教师开房间，学生输房间号免注册答题；即时出正确率并导出 Excel/PDF 报告",
-   "g": "3|学习单 · 自动批改看板"
+   "d": "房间号进班，实时成绩",
+   "w": "教师免费账号；学生免账号但要输房间名或扫码。免费 5 份测验 / 1 房间 / 50 人 / 30 天报告；结果以表格和报告为主。",
+   "g": "2|学生免登录 · 教师要账号"
   },
   {
    "n": "Classkick",
@@ -6760,9 +6814,9 @@
    "c": "soft",
    "t": "vote",
    "f": "part",
-   "d": "全班作业实时同屏",
-   "w": "教师注册，学生用班级码免注册加入；能看到每个学生的实时作答并可回放",
-   "g": "3|学习单 · 自动批改看板"
+   "d": "全班作答同屏，实时看",
+   "w": "教师免费账号；学生 6 位班级码+姓名免登录。免费每月 500 页学生作业+20 作业槽，超限看不到学生作业。看板是作答画面墙，不是统计图表。",
+   "g": "2|学生免登录 · 教师要账号"
   },
   {
    "n": "Quizizz",
@@ -6771,9 +6825,9 @@
    "c": "soft",
    "t": "vote",
    "f": "quota",
-   "d": "游戏化测验自动出报告",
-   "w": "教师注册，学生输加入码免注册；自动判分、按知识点出掌握度报告",
-   "g": "3|学习单 · 自动批改看板"
+   "d": "游戏码进班，实时排行榜",
+   "w": "Quizizz 已改名 Wayground。教师免费账号；学生 6 位游戏码+昵称免登录。实时排行榜与按题报告；深度成长报告在学校版。",
+   "g": "2|学生免登录 · 教师要账号"
   },
   {
    "n": "Edpuzzle 视频嵌题",
@@ -6782,75 +6836,9 @@
    "c": "soft",
    "t": "vote",
    "f": "part",
-   "d": "视频里插题，自动记分",
-   "w": "教师注册，学生用链接/班级码免注册看视频答题；自动记录观看与答题数据",
-   "g": "3|学习单 · 自动批改看板"
-  },
-  {
-   "n": "LimeSurvey",
-   "s": "",
-   "u": "https://www.limesurvey.org/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "开源问卷，统计图表齐全",
-   "w": "自建后学生完全匿名填、无需账号；自带交叉表、图表、SPSS/Excel 导出，机房断网也能用",
-   "g": "4|开源自托管 · 机房断网可用"
-  },
-  {
-   "n": "OpnForm",
-   "s": "",
-   "u": "https://opnform.com/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "开源表单，结果看板",
-   "w": "可自托管；公开链接匿名填写，自带提交看板与导出，适合校内自建",
-   "g": "4|开源自托管 · 机房断网可用"
-  },
-  {
-   "n": "Typebot 对话式表单",
-   "s": "",
-   "u": "https://typebot.com/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "一问一答收数据",
-   "w": "开源可自托管；学生端无需账号，结果进内置分析面板",
-   "g": "4|开源自托管 · 机房断网可用"
-  },
-  {
-   "n": "Formbricks",
-   "s": "",
-   "u": "https://formbricks.com/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "开源问卷，自带分析",
-   "w": "自托管后匿名填写、结果可视化，偏体验调研，适合校本部署",
-   "g": "4|开源自托管 · 机房断网可用"
-  },
-  {
-   "n": "SurveyJS",
-   "s": "",
-   "u": "https://surveyjs.io/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "开源表单引擎 + 结果分析",
-   "w": "开发者向，可嵌进自建页面；匿名填写、结果可导出，需要自己部署",
-   "g": "4|开源自托管 · 机房断网可用"
-  },
-  {
-   "n": "NocoDB",
-   "s": "",
-   "u": "https://nocodb.com/",
-   "c": "soft",
-   "t": "vote",
-   "f": "open",
-   "d": "把收上来的数据变成表格",
-   "w": "开源自托管，表单/表格/看板一体；配合上面的表单工具做机房数据汇总",
-   "g": "4|开源自托管 · 机房断网可用"
+   "d": "视频嵌题，进度即时看",
+   "w": "教师免费账号；只有 Open class 才匿名免登录，Classic 需学生账号。免费约 20 部视频；Open 模式按人追踪不可用。",
+   "g": "2|学生免登录 · 教师要账号"
   },
   {
    "n": "Deskreen 浏览器副屏",
@@ -7100,9 +7088,9 @@
    "u": "https://www.iamwawa.cn/",
    "c": "office",
    "t": "util",
-   "f": "free",
+   "f": "part",
    "d": "中文免登录文本与图片工具",
-   "w": "打开就是工具列表，免注册逐项可用；界面带广告，别传敏感内容",
+   "w": "打开就是工具列表，免注册逐项可用；界面带广告，别传敏感内容。要无广告用 BentoPDF / PDF24（PDF）、Squoosh（压图）、Excalidraw（白板）",
    "g": ""
   },
   {
@@ -7485,6 +7473,105 @@
    "d": "田字格字帖一键生成",
    "w": "打开即生成器，选字打印矢量字帖，免登录；首页杂项多，只用这一页",
    "s": "田字格"
+  },
+  {
+   "n": "Office Pro Plus 2024 LTSC",
+   "u": "https://www.microsoft.com/zh-cn/microsoft-365/office-2024",
+   "c": "soft",
+   "t": "office",
+   "f": "part",
+   "v": "off",
+   "d": "Word / Excel / PPT 买断版，无订阅",
+   "w": "官方卡留着看正版说明；右下角直链是百度网盘分享，需登录且限速，是最后选择。属第三方分享、非官方分发，装前查毒，学校批量用有合规风险。若有蓝奏/123 的同类版本，优先换掉这条。",
+   "s": "",
+   "dl": "https://pan.baidu.com/share/init?surl=0uiQ0cM_ZM1NAt-B8UNvew&pwd=sqe4",
+   "dlk": "bd",
+   "dlp": "sqe4",
+   "dls": "需登录 · 限速"
+  },
+  {
+   "n": "PeaZip 开源压缩",
+   "u": "https://peazip.github.io/",
+   "c": "soft",
+   "t": "file",
+   "f": "open",
+   "d": "开源解压缩，界面比 7-Zip 友好",
+   "w": "认 200+ 格式，绿色版解压即用，无广告",
+   "s": ""
+  },
+  {
+   "n": "WinMerge 文本比对",
+   "u": "https://winmerge.org/",
+   "c": "soft",
+   "t": "tool",
+   "f": "open",
+   "d": "两份教案 / 代码逐行比对",
+   "w": "开源无广告，改动高亮，可直接合并",
+   "s": ""
+  },
+  {
+   "n": "QQ Windows 版",
+   "u": "https://im.qq.com/pcqq/",
+   "c": "soft",
+   "t": "net",
+   "f": "free",
+   "d": "工作群与传文件，绕不开",
+   "w": "官网直下；安装时取消附加勾选",
+   "s": ""
+  },
+  {
+   "n": "钉钉",
+   "u": "https://www.dingtalk.com/",
+   "c": "soft",
+   "t": "net",
+   "f": "free",
+   "d": "学校通知、打卡、家校群",
+   "w": "官方版无捆绑，个人使用免费",
+   "s": ""
+  },
+  {
+   "n": "Poll Maker",
+   "u": "https://www.poll-maker.com/",
+   "c": "soft",
+   "t": "vote",
+   "f": "part",
+   "s": "",
+   "d": "免登录建投票，结果实时成图",
+   "w": "师生都不用注册：写个问题加选项，发链接就填。实时饼图/柱图、大屏演示、前后测对比，可导出结果。免费带小徽章，去徽章才付费。国内实测可开。。要无广告用同组 CryptPad / Tally / ARSnova / Framadate",
+   "g": "1|师生零账号 · 发链接就填"
+  },
+  {
+   "n": "StrawPoll",
+   "u": "https://strawpoll.com/",
+   "c": "soft",
+   "t": "vote",
+   "f": "part",
+   "s": "",
+   "d": "一行建投票，实时饼图柱图",
+   "w": "免注册创建，结果实时推送刷新，可导出 Excel/CSV。免费无限投票但带广告；默认拦 VPN/代理，机房若走代理可能投不了。。要无广告用同组 CryptPad / Tally / ARSnova / Framadate",
+   "g": "1|师生零账号 · 发链接就填"
+  },
+  {
+   "n": "ARSnova",
+   "u": "https://arsnova.eu/",
+   "c": "soft",
+   "t": "vote",
+   "f": "open",
+   "s": "",
+   "d": "开源课堂问答，词云实时上屏",
+   "w": "师生都免注册，学生用 6 位码或扫码进。实时词云、投票、排行榜、趋势图，免费 500 人，开源可自托管。国内实测可开。",
+   "g": "1|师生零账号 · 发链接就填"
+  },
+  {
+   "n": "WPS 表单",
+   "u": "https://f.wps.cn/",
+   "c": "soft",
+   "t": "vote",
+   "f": "free",
+   "s": "",
+   "d": "中文免登录填，饼图条形图",
+   "w": "教师要 WPS 账号；学生点链接就填、不用登录不用手机号，结果实时同步，选择题自动出饼图/条形图。别开「群收集」「填写需登录」，一开就要微信/QQ 身份。",
+   "g": "2|学生免登录 · 教师要账号"
   }
  ],
  "picks": {
@@ -7590,8 +7677,8 @@
    "https://github.com/qarmin/czkawka"
   ],
   "soft|office": [
-   "https://calibre-ebook.com/download_portable",
    "https://raincandy.tech/wpsoffice_2023_x64/",
+   "https://calibre-ebook.com/download_portable",
    "https://www.wps.cn/",
    "https://www.onlyoffice.com/zh/desktop",
    "https://github.com/hiroi-sora/Umi-OCR"
@@ -7607,31 +7694,35 @@
    "https://chunjing.app"
   ],
   "soft|media": [
+   "https://potplayer.org/",
    "https://getsharex.com/"
   ],
   "soft|tool": [
-   "https://espanso.org/",
-   "https://www.mefcl.com/sougouime.html"
+   "https://www.mefcl.com/sougouime.html",
+   "https://espanso.org/"
   ],
   "soft|safe": [
+   "https://www.huorong.cn/",
    "https://www.bleachbit.org/",
-   "https://veracrypt.io/en/Home.html",
-   "https://www.huorong.cn/"
+   "https://veracrypt.io/en/Home.html"
   ],
   "soft|os": [
+   "https://massgrave.dev/",
    "https://www.ventoy.net/"
   ],
   "soft|batch": [
    "https://ninite.com"
   ],
   "soft|net": [
+   "https://pc.weixin.qq.com/",
    "https://www.todesk.com/download.html"
   ],
   "soft|browse": [
    "https://www.slimjet.com/cn/dlpage.php"
   ],
   "soft|edu": [
-   "https://anbola.github.io/fenban/"
+   "https://anbola.github.io/fenban/",
+   "https://anbola.github.io/chengji/"
   ],
   "plug|net": [
    "https://scriptcat.org/zh-CN/script-show-page/1604"
@@ -7677,6 +7768,7 @@
    "https://www.canva.cn/"
   ],
   "office|pdf": [
+   "https://www.pdf-xchange.com/product/pdf-xchange-editor",
    "https://www.bentopdf.com/zh",
    "https://tools.pdf24.org/zh/all-tools",
    "https://stirling.com/app/reader?lng=zh-CN",
@@ -7742,8 +7834,13 @@
   "soft|vote": [
    "https://cryptpad.fr/form/",
    "https://tally.so/",
+   "https://www.poll-maker.com/",
+   "https://strawpoll.com/",
+   "https://arsnova.eu/",
    "https://framadate.org/abc/",
-   "https://www.limesurvey.org/"
+   "https://f.wps.cn/",
+   "https://www.socrative.com/",
+   "https://wayground.com/"
   ],
   "soft|xc": [
    "https://www.kylinos.cn/",
@@ -7781,6 +7878,22 @@
   ],
   "open|repo": [
    "https://github.com/opendatalab/MinerU"
+  ],
+  "plug|mgr": [
+   "https://www.crxsoso.com/webstore/detail/ndcooeababalnlpkfedmmbbbgkljhpjf"
+  ],
+  "soft|must": [
+   "https://www.rarlab.com/download.htm",
+   "https://raincandy.tech/wpsoffice_2023_x64/",
+   "https://www.mefcl.com/sougouime.html",
+   "https://massgrave.dev/",
+   "https://www.7-zip.org/",
+   "https://www.huorong.cn/",
+   "https://potplayer.org/",
+   "https://www.glenn.delahoy.com/snappy-driver-installer-origin/",
+   "https://pc.weixin.qq.com/",
+   "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+   "https://www.slimjet.com/cn/dlpage.php"
   ]
  }
 }
